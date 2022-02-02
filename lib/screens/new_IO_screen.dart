@@ -1,4 +1,5 @@
 import 'package:budget/main.dart';
+import 'package:budget/screens/popUp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -41,29 +42,10 @@ class NewIOScreen extends StatelessWidget {
                               ),
                               iconSize: 30,
                               onPressed: () {
-                                showModalBottomSheet<void>(
+                                showModalBottomSheet(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return Container(
-                                      height: 200,
-                                      color: Colors.amber,
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            const Text('Modal BottomSheet'),
-                                            ElevatedButton(
-                                              child: const Text(
-                                                  'Close BottomSheet'),
-                                              onPressed: () =>
-                                                  Navigator.pop(context),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    );
+                                    return popUpScreen();
                                   },
                                 );
                               },
