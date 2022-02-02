@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'route_generator.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           fontFamily: 'Rubik',
         ),
-        home: MyHomePage(),
+        initialRoute: '/',
+        onGenerateRoute: RouteGenerator.generateRoute,
       ),
     );
   }
@@ -493,7 +495,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       Icons.add_rounded,
                       size: 40,
                     ),
-                    onPressed: () {}),
+                    onPressed: () {
+                      // Pushing a named route
+                      Navigator.of(context).pushNamed(
+                        '/second',
+                        arguments: 'Hello there from the first page!',
+                      );
+                    }),
               )
             : null,
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
