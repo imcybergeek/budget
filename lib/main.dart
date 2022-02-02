@@ -246,6 +246,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     "Salary",
                     "salary",
                     "+10,000",
+                    income: true,
                   ),
                   IO(
                     LineIcons.utensils,
@@ -272,6 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     "Salary",
                     "",
                     "+10,000",
+                    income: true,
                   ),
                   IO(
                     LineIcons.utensils,
@@ -406,7 +408,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+                        padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
                         child: Row(
                           children: [
                             Column(
@@ -561,6 +563,7 @@ class IO extends StatelessWidget {
   final String ioName;
   final String ioDesc;
   final String ioAmt;
+  bool income;
 
   IO(
     this.icon,
@@ -569,6 +572,7 @@ class IO extends StatelessWidget {
     this.ioDesc,
     this.ioAmt, {
     Key? key,
+    this.income = false,
   }) : super(key: key);
 
   @override
@@ -619,7 +623,7 @@ class IO extends StatelessWidget {
               Spacer(),
               CustomText(
                 text: ioAmt,
-                color: Colors.blue,
+                color: income ? Colors.blue : null,
                 size: 15,
                 weight: FontWeight.bold,
               ),
