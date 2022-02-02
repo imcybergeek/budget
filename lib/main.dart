@@ -12,12 +12,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Makes the Status Bar transparent which in turns results in it being the same as background color
     SystemUiOverlayStyle myOverlayStyle =
         SystemUiOverlayStyle(statusBarColor: Colors.blue);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: myOverlayStyle,
-      //...
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Budget App',
@@ -67,65 +65,6 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         backgroundColor: Colors.grey[200],
         extendBodyBehindAppBar: true,
-        // appBar: opacity
-        //     ? AppBar(
-        //         backgroundColor: Theme.of(context).colorScheme.primary,
-        //         elevation: 0,
-        //         title: Opacity(
-        //           opacity: opacity ? 1 : 0,
-        //           child: Row(
-        //             crossAxisAlignment: CrossAxisAlignment.end,
-        //             children: [
-        //               Column(
-        //                 children: [
-        //                   CustomText(
-        //                       color: Colors.white, text: "2022-01", size: 15)
-        //                 ],
-        //               ),
-        //               Spacer(),
-        //               Column(
-        //                 children: [
-        //                   Row(
-        //                     crossAxisAlignment: CrossAxisAlignment.end,
-        //                     children: [
-        //                       CustomText(
-        //                         color: Colors.white,
-        //                         text: "Expense:",
-        //                         size: 14,
-        //                         weight: FontWeight.w600,
-        //                       ),
-        //                       CustomText(
-        //                         color: Colors.white,
-        //                         text: "-7,376",
-        //                         size: 18,
-        //                         weight: FontWeight.bold,
-        //                       ),
-        //                     ],
-        //                   ),
-        //                   Row(
-        //                     crossAxisAlignment: CrossAxisAlignment.end,
-        //                     children: [
-        //                       CustomText(
-        //                         color: Colors.white,
-        //                         text: "Income:",
-        //                         size: 14,
-        //                         weight: FontWeight.w600,
-        //                       ),
-        //                       CustomText(
-        //                         color: Colors.white,
-        //                         text: "+20,000",
-        //                         size: 18,
-        //                         weight: FontWeight.bold,
-        //                       ),
-        //                     ],
-        //                   ),
-        //                 ],
-        //               )
-        //             ],
-        //           ),
-        //         ),
-        //       )
-        //     : null,
         body: Stack(
           children: [
             SingleChildScrollView(
