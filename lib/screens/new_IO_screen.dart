@@ -6,16 +6,6 @@ import 'package:budget/screens/popUp_screen.dart';
 class NewIOScreen extends StatelessWidget {
   final String data;
   const NewIOScreen({Key? key, required this.data}) : super(key: key);
-  @override
-  void initState(context) {
-    print("XD");
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return popUpScreen();
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -152,10 +152,7 @@ class optionTile extends StatelessWidget {
         text: text,
         size: 16,
       ),
-      trailing: Text(
-        trailing,
-        style: TextStyle(fontSize: size),
-      ),
+      trailing: CustomText(text: trailing, size: size),
     );
   }
 }

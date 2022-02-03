@@ -1,8 +1,10 @@
+import 'package:budget/screens/popUp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'route_generator.dart';
+import 'screens/app_drawer.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemUiOverlayStyle myOverlayStyle =
-        SystemUiOverlayStyle(statusBarColor: Colors.blue);
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: myOverlayStyle,
       child: MaterialApp(
@@ -63,436 +65,413 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.grey[200],
-        extendBodyBehindAppBar: true,
-        body: Stack(
-          children: [
-            SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              controller: _controller,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    color: Theme.of(context).colorScheme.primary,
-                    padding: EdgeInsets.only(left: 15, top: 10, bottom: 15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.calendar_today,
-                              color: Colors.white,
-                              size: 12,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            CustomText(
-                              text: "2022-01",
-                              size: 12,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            CustomText(
-                              text: "Balance",
-                              size: 12,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            CustomText(
-                              text: "+19,330",
-                              color: Colors.white,
-                              size: 35,
-                              weight: FontWeight.bold,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            CustomText(
-                              text: "Expense:",
-                              color: Colors.white,
-                              size: 12,
-                            ),
-                            CustomText(
-                              text: "-670",
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            CustomText(
-                              text: "Income:",
-                              color: Colors.white,
-                              size: 12,
-                            ),
-                            CustomText(
-                              text: "+20,000",
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 100,
-                    child: Stack(
-                      children: [
-                        Container(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey, blurRadius: 4)
-                            ],
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
-                            ),
-                          ),
-                        ),
-                        Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(10, 15, 10, 20),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(bottom: 1),
-                                    child: CustomText(
-                                      text: "Budget:",
-                                      size: 10,
-                                      weight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  CustomText(
-                                    text: "5,000",
-                                    size: 18,
-                                    weight: FontWeight.bold,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                LinearPercentIndicator(
-                                  width: MediaQuery.of(context).size.width,
-                                  lineHeight: 8,
-                                  percent: 0.25,
-                                  backgroundColor: Colors.grey[100],
-                                  progressColor: Colors.blue,
-                                  barRadius: Radius.circular(10),
-                                )
-                              ],
-                            ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(bottom: 1),
-                                    child: CustomText(
-                                      text: "Remaining Budget:",
-                                      size: 12,
-                                    ),
-                                  ),
-                                  CustomText(
-                                    text: "4,330",
-                                    size: 18,
-                                    weight: FontWeight.bold,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  DailyIO(
-                    "Jan 28, 2022",
-                    "-160",
-                    "+10,000",
-                  ),
-                  IO(
-                    FontAwesomeIcons.wallet,
-                    Colors.red,
-                    "Salary",
-                    "salary",
-                    "+10,000",
-                    income: true,
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "swiggy paneer",
-                    "-160",
-                  ),
-                  DailyIO(
-                    "Jan 24, 2022",
-                    "-510",
-                    "+10,000",
-                  ),
-                  IO(
-                    FontAwesomeIcons.youtube,
-                    Colors.green,
-                    "XD",
-                    "XD",
-                    "-10",
-                  ),
-                  IO(
-                    FontAwesomeIcons.wallet,
-                    Colors.red,
-                    "Salary",
-                    "",
-                    "+10,000",
-                    income: true,
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "zomato",
-                    "-500",
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "zomato",
-                    "-500",
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "zomato",
-                    "-500",
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "zomato",
-                    "-500",
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "zomato",
-                    "-500",
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "zomato",
-                    "-500",
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "zomato",
-                    "-500",
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "zomato",
-                    "-500",
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "zomato",
-                    "-500",
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "zomato",
-                    "-500",
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "zomato",
-                    "-500",
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "zomato",
-                    "-500",
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "zomato",
-                    "-500",
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "zomato",
-                    "-500",
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "zomato",
-                    "-500",
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "zomato",
-                    "-500",
-                  ),
-                  IO(
-                    FontAwesomeIcons.utensils,
-                    Colors.orange,
-                    "Food",
-                    "zomato",
-                    "-500",
-                  ),
-                ],
-              ),
+    return Container(
+      color: Theme.of(context).colorScheme.primary,
+      child: SafeArea(
+        child: Scaffold(
+          drawer: SizedBox(
+            width: 250,
+            child: Drawer(
+              child: AppDrawer(),
             ),
-            Opacity(
-              opacity: opacity,
-              child: SizedBox(
-                height: 45,
-                child: Stack(
+          ),
+          backgroundColor: Colors.grey[200],
+          extendBodyBehindAppBar: true,
+          body: Stack(
+            children: [
+              SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                controller: _controller,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
-                        child: Row(
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                CustomText(
-                                    color: Colors.white,
-                                    text: "2022-01",
-                                    size: 15)
-                              ],
-                            ),
-                            Spacer(),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(
-                                  children: [
-                                    CustomText(
-                                      color: Colors.white,
-                                      text: "Expense:",
-                                      size: 14,
-                                      weight: FontWeight.w600,
-                                    ),
-                                    CustomText(
-                                      color: Colors.white,
-                                      text: "-7,376",
-                                      size: 16,
-                                      weight: FontWeight.bold,
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    CustomText(
-                                      color: Colors.white,
-                                      text: "Income:",
-                                      size: 14,
-                                      weight: FontWeight.w600,
-                                    ),
-                                    CustomText(
-                                      color: Colors.white,
-                                      text: "+20,000",
-                                      size: 16,
-                                      weight: FontWeight.bold,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
+                      color: Theme.of(context).colorScheme.primary,
+                      padding: EdgeInsets.only(left: 15, top: 10, bottom: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.calendar_today,
+                                color: Colors.white,
+                                size: 12,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              CustomText(
+                                text: "2022-01",
+                                size: 12,
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                width: 2,
+                              ),
+                              CustomText(
+                                text: "Balance",
+                                size: 12,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              CustomText(
+                                text: "+19,330",
+                                color: Colors.white,
+                                size: 35,
+                                weight: FontWeight.bold,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              CustomText(
+                                text: "Expense:",
+                                color: Colors.white,
+                                size: 12,
+                              ),
+                              CustomText(
+                                text: "-670",
+                                color: Colors.white,
+                                size: 16,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              CustomText(
+                                text: "Income:",
+                                color: Colors.white,
+                                size: 12,
+                              ),
+                              CustomText(
+                                text: "+20,000",
+                                color: Colors.white,
+                                size: 16,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
+                    SizedBox(
+                      height: 100,
+                      child: Stack(
+                        children: [
+                          Container(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey, blurRadius: 4)
+                              ],
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              ),
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(10, 15, 10, 20),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(bottom: 1),
+                                      child: CustomText(
+                                        text: "Budget:",
+                                        size: 10,
+                                        weight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    CustomText(
+                                      text: "5,000",
+                                      size: 18,
+                                      weight: FontWeight.bold,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  LinearPercentIndicator(
+                                    width: MediaQuery.of(context).size.width,
+                                    lineHeight: 8,
+                                    percent: 0.25,
+                                    backgroundColor: Colors.grey[100],
+                                    progressColor: Colors.blue,
+                                    barRadius: Radius.circular(10),
+                                  )
+                                ],
+                              ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(bottom: 1),
+                                      child: CustomText(
+                                        text: "Remaining Budget:",
+                                        size: 12,
+                                      ),
+                                    ),
+                                    CustomText(
+                                      text: "4,330",
+                                      size: 18,
+                                      weight: FontWeight.bold,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    DailyIO(
+                      "Jan 28, 2022",
+                      "-160",
+                      "+10,000",
+                    ),
+                    IO(
+                      FontAwesomeIcons.wallet,
+                      Colors.red,
+                      "Salary",
+                      "salary",
+                      "+10,000",
+                      income: true,
+                    ),
+                    IO(
+                      FontAwesomeIcons.utensils,
+                      Colors.orange,
+                      "Food",
+                      "swiggy paneer",
+                      "-160",
+                    ),
+                    DailyIO(
+                      "Jan 24, 2022",
+                      "-510",
+                      "+10,000",
+                    ),
+                    IO(
+                      FontAwesomeIcons.youtube,
+                      Colors.green,
+                      "XD",
+                      "XD",
+                      "-10",
+                    ),
+                    IO(
+                      FontAwesomeIcons.wallet,
+                      Colors.red,
+                      "Salary",
+                      "",
+                      "+10,000",
+                      income: true,
+                    ),
+                    IO(
+                      FontAwesomeIcons.utensils,
+                      Colors.orange,
+                      "Food",
+                      "zomato",
+                      "-500",
+                    ),
+                    IO(
+                      FontAwesomeIcons.utensils,
+                      Colors.orange,
+                      "Food",
+                      "zomato",
+                      "-500",
+                    ),
+                    IO(
+                      FontAwesomeIcons.utensils,
+                      Colors.orange,
+                      "Food",
+                      "zomato",
+                      "-500",
+                    ),
+                    IO(
+                      FontAwesomeIcons.utensils,
+                      Colors.orange,
+                      "Food",
+                      "zomato",
+                      "-500",
+                    ),
+                    IO(
+                      FontAwesomeIcons.utensils,
+                      Colors.orange,
+                      "Food",
+                      "zomato",
+                      "-500",
+                    ),
+                    IO(
+                      FontAwesomeIcons.utensils,
+                      Colors.orange,
+                      "Food",
+                      "zomato",
+                      "-500",
+                    ),
+                    IO(
+                      FontAwesomeIcons.utensils,
+                      Colors.orange,
+                      "Food",
+                      "zomato",
+                      "-500",
+                    ),
+                    IO(
+                      FontAwesomeIcons.utensils,
+                      Colors.orange,
+                      "Food",
+                      "zomato",
+                      "-500",
+                    ),
+                    IO(
+                      FontAwesomeIcons.utensils,
+                      Colors.orange,
+                      "Food",
+                      "zomato",
+                      "-500",
+                    ),
+                    IO(
+                      FontAwesomeIcons.utensils,
+                      Colors.orange,
+                      "Food",
+                      "zomato",
+                      "-500",
+                    ),
+                    IO(
+                      FontAwesomeIcons.utensils,
+                      Colors.orange,
+                      "Food",
+                      "zomato",
+                      "-500",
+                    ),
+                    IO(
+                      FontAwesomeIcons.utensils,
+                      Colors.orange,
+                      "Food",
+                      "zomato",
+                      "-500",
+                    ),
+                    SizedBox(height: 15),
                   ],
                 ),
               ),
-            ),
-          ],
-        ),
-        bottomNavigationBar: opacity < 1
-            ? BottomAppBar(
-                shape: CircularNotchedRectangle(),
-                child: Row(
-                  children: [
-                    CustomIcon(
-                      icon: Icons.menu_rounded,
-                    ),
-                    CustomIcon(
-                      icon: Icons.dashboard_customize,
-                    ),
-                    CustomIcon(
-                      icon: Icons.pie_chart_rounded,
-                    ),
-                    CustomIcon(
-                      icon: Icons.folder_special,
-                    ),
-                  ],
+              Opacity(
+                opacity: opacity,
+                child: SizedBox(
+                  height: 45,
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
+                          child: Row(
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  CustomText(
+                                      color: Colors.white,
+                                      text: "2022-01",
+                                      size: 15),
+                                ],
+                              ),
+                              Spacer(),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    children: [
+                                      CustomText(
+                                        color: Colors.white,
+                                        text: "Expense:",
+                                        size: 14,
+                                        weight: FontWeight.w600,
+                                      ),
+                                      CustomText(
+                                        color: Colors.white,
+                                        text: "-7,376",
+                                        size: 16,
+                                        weight: FontWeight.bold,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      CustomText(
+                                        color: Colors.white,
+                                        text: "Income:",
+                                        size: 14,
+                                        weight: FontWeight.w600,
+                                      ),
+                                      CustomText(
+                                        color: Colors.white,
+                                        text: "+20,000",
+                                        size: 16,
+                                        weight: FontWeight.bold,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              )
-            : null,
-        floatingActionButton: opacity < 1
-            ? Padding(
-                padding: EdgeInsets.only(bottom: 8.0),
-                child: FloatingActionButton(
+              ),
+            ],
+          ),
+          bottomNavigationBar: opacity < 1
+              ? BottomAppBar(
+                  shape: CircularNotchedRectangle(),
+                  child: Row(
+                    children: [
+                      Builder(
+                        builder: (context) => CustomIcon(
+                          icon: Icons.menu_rounded,
+                          func: () => Scaffold.of(context).openDrawer(),
+                        ),
+                      ),
+                      // CustomIcon(
+                      //   icon: Icons.dashboard_customize,
+                      // ),
+                      // CustomIcon(
+                      //   icon: Icons.pie_chart_rounded,
+                      // ),
+                      // CustomIcon(
+                      //   icon: Icons.folder_special,
+                      //   // ),
+                    ],
+                  ),
+                )
+              : null,
+          floatingActionButton: opacity < 1
+              ? Padding(
+                  padding: EdgeInsets.only(bottom: 8.0),
+                  child: FloatingActionButton(
                     child: Icon(
                       Icons.add_rounded,
                       size: 40,
@@ -503,10 +482,18 @@ class _MyHomePageState extends State<MyHomePage> {
                         '/second',
                         arguments: 'Hello there from the first page!',
                       );
-                    }),
-              )
-            : null,
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return popUpScreen();
+                        },
+                      );
+                    },
+                  ),
+                )
+              : null,
+          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        ),
       ),
     );
   }
@@ -526,29 +513,24 @@ class DailyIO extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(10, 15, 10, 0),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
       child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey, blurRadius: .5, offset: Offset(0, .5)),
-          ],
-        ),
-        width: MediaQuery.of(context).size.width,
-        child: Container(
-          padding: EdgeInsets.all(5),
-          color: Colors.grey[100],
-          width: MediaQuery.of(context).size.width,
+        color: Colors.grey[100],
+        child: Padding(
+          padding: const EdgeInsets.all(5),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CustomText(text: date, color: Colors.grey[600], size: 10),
+              CustomText(
+                text: "Jan 31, 2022",
+                size: 10,
+              ),
               Spacer(),
               CustomText(
-                  text: "Expense:$expense", color: Colors.grey[600], size: 10),
-              SizedBox(width: 5),
-              CustomText(text: "Income:$income", color: Colors.blue, size: 10),
+                text: "Expense:-27,206  Income:+10,000",
+                size: 10,
+              ),
             ],
           ),
         ),
@@ -577,69 +559,53 @@ class IO extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        // Pushing a named route
-        Navigator.of(context).pushNamed(
-          '/third',
-          arguments: 'Hello there from the first page!',
-        );
-      },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
-        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey, blurRadius: .5, offset: Offset(0, .5)),
-            ],
-          ),
-          width: MediaQuery.of(context).size.width,
-          child: Container(
-            height: 50,
-            padding: EdgeInsets.all(5),
-            width: MediaQuery.of(context).size.width,
-            child: Row(
-              children: [
-                Container(
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                      color: color, borderRadius: BorderRadius.circular(50)),
-                  child: Icon(
-                    icon,
-                    size: 20,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(width: 20),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomText(
-                      text: ioName,
-                      size: 15,
-                    ),
-                    ioDesc != ""
-                        ? CustomText(
-                            text: ioDesc,
-                            color: Colors.grey[600],
-                            size: 8,
-                          )
-                        : Container(),
-                  ],
-                ),
-                Spacer(),
-                CustomText(
-                  text: ioAmt,
-                  color: income ? Colors.blue : null,
-                  size: 15,
-                  weight: FontWeight.bold,
-                ),
-              ],
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey, blurRadius: .5, offset: Offset(0, .5)),
+          ],
+        ),
+        child: ListTile(
+          onTap: () {
+            // Pushing a named route
+            Navigator.of(context).pushNamed(
+              '/third',
+              arguments: 'Hello there from the first page!',
+            );
+          },
+          horizontalTitleGap: 0,
+          minVerticalPadding: 6,
+          visualDensity: VisualDensity(vertical: -4),
+          contentPadding: EdgeInsets.only(left: 10, right: 10),
+          dense: true,
+          leading: Container(
+            height: 30,
+            width: 30,
+            decoration: BoxDecoration(
+                color: color, borderRadius: BorderRadius.circular(50)),
+            child: Icon(
+              icon,
+              size: 20,
+              color: Colors.white,
             ),
+          ),
+          title: CustomText(
+            text: ioName,
+            size: 15,
+          ),
+          subtitle: CustomText(
+            text: ioDesc,
+            size: 8,
+          ),
+          trailing: CustomText(
+            text: ioAmt,
+            size: 15,
+            weight: FontWeight.bold,
+            color: income ? Colors.blue : null,
           ),
         ),
       ),
@@ -675,9 +641,11 @@ class CustomText extends StatelessWidget {
 
 class CustomIcon extends StatelessWidget {
   final IconData icon;
+  final VoidCallback func;
   CustomIcon({
     Key? key,
     required this.icon,
+    required this.func,
   }) : super(key: key);
 
   @override
@@ -689,7 +657,7 @@ class CustomIcon extends StatelessWidget {
           size: 30,
           color: Colors.grey[400],
         ),
-        onPressed: () {});
+        onPressed: () => func());
   }
 }
 
@@ -703,6 +671,7 @@ class Div extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: Divider(
+        thickness: 1,
         height: 0.5,
       ),
     );
