@@ -1,4 +1,5 @@
 import 'package:budget/screens/new_IO_screen.dart';
+import 'package:budget/screens/edit_IO_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/main.dart';
 
@@ -15,6 +16,19 @@ class RouteGenerator {
         if (args is String) {
           return MaterialPageRoute(
             builder: (_) => NewIOScreen(
+              data: args,
+            ),
+          );
+        }
+        // If args is not of the correct type, return an error page.
+        // You can also throw an exception while in development.
+        return _errorRoute();
+
+      case '/third':
+        // Validation of correct data type
+        if (args is String) {
+          return MaterialPageRoute(
+            builder: (_) => EditIOScreen(
               data: args,
             ),
           );

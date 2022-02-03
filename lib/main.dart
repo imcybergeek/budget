@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'route_generator.dart';
 
@@ -241,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     "+10,000",
                   ),
                   IO(
-                    LineIcons.wallet,
+                    FontAwesomeIcons.wallet,
                     Colors.red,
                     "Salary",
                     "salary",
@@ -249,7 +249,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     income: true,
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "swiggy paneer",
@@ -261,14 +261,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     "+10,000",
                   ),
                   IO(
-                    LineIcons.youtube,
+                    FontAwesomeIcons.youtube,
                     Colors.green,
                     "XD",
                     "XD",
                     "-10",
                   ),
                   IO(
-                    LineIcons.wallet,
+                    FontAwesomeIcons.wallet,
                     Colors.red,
                     "Salary",
                     "",
@@ -276,119 +276,119 @@ class _MyHomePageState extends State<MyHomePage> {
                     income: true,
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "zomato",
                     "-500",
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "zomato",
                     "-500",
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "zomato",
                     "-500",
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "zomato",
                     "-500",
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "zomato",
                     "-500",
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "zomato",
                     "-500",
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "zomato",
                     "-500",
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "zomato",
                     "-500",
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "zomato",
                     "-500",
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "zomato",
                     "-500",
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "zomato",
                     "-500",
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "zomato",
                     "-500",
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "zomato",
                     "-500",
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "zomato",
                     "-500",
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "zomato",
                     "-500",
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "zomato",
                     "-500",
                   ),
                   IO(
-                    LineIcons.utensils,
+                    FontAwesomeIcons.utensils,
                     Colors.orange,
                     "Food",
                     "zomato",
@@ -477,7 +477,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       icon: Icons.menu_rounded,
                     ),
                     CustomIcon(
-                      icon: Icons.apps_rounded,
+                      icon: Icons.dashboard_customize,
                     ),
                     CustomIcon(
                       icon: Icons.pie_chart_rounded,
@@ -577,57 +577,69 @@ class IO extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+    return GestureDetector(
+      onTap: () {
+        // Pushing a named route
+        Navigator.of(context).pushNamed(
+          '/third',
+          arguments: 'Hello there from the first page!',
+        );
+      },
       child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey, blurRadius: .5, offset: Offset(0, .5)),
-          ],
-        ),
-        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: Container(
-          height: 50,
-          padding: EdgeInsets.all(5),
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    color: color, borderRadius: BorderRadius.circular(10)),
-                child: Icon(
-                  icon,
-                  color: Colors.white,
-                ),
-              ),
-              SizedBox(width: 20),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomText(
-                    text: ioName,
-                    size: 15,
-                  ),
-                  ioDesc != ""
-                      ? CustomText(
-                          text: ioDesc,
-                          color: Colors.grey[600],
-                          size: 8,
-                        )
-                      : Container(),
-                ],
-              ),
-              Spacer(),
-              CustomText(
-                text: ioAmt,
-                color: income ? Colors.blue : null,
-                size: 15,
-                weight: FontWeight.bold,
-              ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey, blurRadius: .5, offset: Offset(0, .5)),
             ],
+          ),
+          width: MediaQuery.of(context).size.width,
+          child: Container(
+            height: 50,
+            padding: EdgeInsets.all(5),
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              children: [
+                Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                      color: color, borderRadius: BorderRadius.circular(50)),
+                  child: Icon(
+                    icon,
+                    size: 20,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(width: 20),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomText(
+                      text: ioName,
+                      size: 15,
+                    ),
+                    ioDesc != ""
+                        ? CustomText(
+                            text: ioDesc,
+                            color: Colors.grey[600],
+                            size: 8,
+                          )
+                        : Container(),
+                  ],
+                ),
+                Spacer(),
+                CustomText(
+                  text: ioAmt,
+                  color: income ? Colors.blue : null,
+                  size: 15,
+                  weight: FontWeight.bold,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -678,5 +690,21 @@ class CustomIcon extends StatelessWidget {
           color: Colors.grey[400],
         ),
         onPressed: () {});
+  }
+}
+
+class Div extends StatelessWidget {
+  const Div({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20),
+      child: Divider(
+        height: 0.5,
+      ),
+    );
   }
 }

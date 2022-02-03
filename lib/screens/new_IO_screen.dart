@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:budget/main.dart';
 import 'package:budget/screens/popUp_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
 
 class NewIOScreen extends StatelessWidget {
   final String data;
@@ -41,20 +41,14 @@ class NewIOScreen extends StatelessWidget {
                       Row(
                         children: [
                           Container(
-                            height: 40,
-                            width: 40,
+                            height: 50,
+                            width: 50,
                             decoration: BoxDecoration(
                               color: Colors.green,
                               borderRadius: BorderRadius.circular(50),
                             ),
-                            child: IconButton(
-                              padding: EdgeInsets.zero,
-                              icon: Icon(
-                                LineIcons.youtube,
-                                color: Colors.white,
-                              ),
-                              iconSize: 30,
-                              onPressed: () {
+                            child: GestureDetector(
+                              onTap: () {
                                 showModalBottomSheet(
                                   context: context,
                                   builder: (BuildContext context) {
@@ -62,6 +56,11 @@ class NewIOScreen extends StatelessWidget {
                                   },
                                 );
                               },
+                              child: Icon(
+                                FontAwesomeIcons.youtube,
+                                color: Colors.white,
+                                size: 35,
+                              ),
                             ),
                           ),
                           Spacer(),
@@ -110,17 +109,13 @@ class NewIOScreen extends StatelessWidget {
                     text: "Date  Today",
                     trailing: Icons.arrow_forward_ios,
                   ),
-                  Divider(
-                    height: 0.5,
-                  ),
+                  Div(),
                   optionTile(
                     leading: Icons.access_time_filled,
                     text: "Time  18:33",
                     trailing: Icons.arrow_forward_ios,
                   ),
-                  Divider(
-                    height: 0.5,
-                  ),
+                  Div(),
                   Stack(
                     children: [
                       ListTile(
@@ -128,8 +123,8 @@ class NewIOScreen extends StatelessWidget {
                         visualDensity:
                             VisualDensity(horizontal: -4, vertical: -4),
                         leading: Icon(
-                          LineIcons.pen,
-                          size: 18,
+                          FontAwesomeIcons.pen,
+                          size: 16,
                         ),
                         title: CustomText(
                           text: "Remark",
@@ -176,6 +171,7 @@ class optionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      dense: true,
       visualDensity: VisualDensity(horizontal: -2, vertical: -2),
       leading: Icon(
         leading,
@@ -189,7 +185,6 @@ class optionTile extends StatelessWidget {
         trailing,
         size: 15,
       ),
-      dense: true,
     );
   }
 }

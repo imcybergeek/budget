@@ -30,7 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  line_icons:
+  font_awesome_flutter:
   percent_indicator:
 
 dev_dependencies:
