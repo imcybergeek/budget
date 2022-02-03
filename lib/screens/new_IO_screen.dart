@@ -6,6 +6,16 @@ import 'package:line_icons/line_icons.dart';
 class NewIOScreen extends StatelessWidget {
   final String data;
   const NewIOScreen({Key? key, required this.data}) : super(key: key);
+  @override
+  void initState(context) {
+    print("XD");
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return popUpScreen();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +41,14 @@ class NewIOScreen extends StatelessWidget {
                       Row(
                         children: [
                           Container(
+                            height: 40,
+                            width: 40,
                             decoration: BoxDecoration(
                               color: Colors.green,
                               borderRadius: BorderRadius.circular(50),
                             ),
                             child: IconButton(
+                              padding: EdgeInsets.zero,
                               icon: Icon(
                                 LineIcons.youtube,
                                 color: Colors.white,
@@ -111,6 +124,7 @@ class NewIOScreen extends StatelessWidget {
                   Stack(
                     children: [
                       ListTile(
+                        dense: true,
                         visualDensity:
                             VisualDensity(horizontal: -4, vertical: -4),
                         leading: Icon(
@@ -122,11 +136,12 @@ class NewIOScreen extends StatelessWidget {
                           size: 16,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 150, top: 15, bottom: 15),
-                        child: SizedBox(
-                          width: 225,
+                      ListTile(
+                        dense: true,
+                        visualDensity:
+                            VisualDensity(horizontal: -4, vertical: -4),
+                        title: Padding(
+                          padding: const EdgeInsets.only(left: 125),
                           child: TextField(
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
