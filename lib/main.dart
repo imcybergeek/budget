@@ -455,9 +455,15 @@ class _MyHomePageState extends State<MyHomePage> {
                           func: () => Scaffold.of(context).openDrawer(),
                         ),
                       ),
-                      // CustomIcon(
-                      //   icon: Icons.dashboard_customize,
-                      // ),
+                      CustomIcon(
+                        icon: Icons.dashboard_customize,
+                        func: () =>
+                            // Pushing a named route
+                            Navigator.of(context).pushNamed(
+                          '/fourth',
+                          arguments: 'Hello there from the first page!',
+                        ),
+                      ),
                       // CustomIcon(
                       //   icon: Icons.pie_chart_rounded,
                       // ),
