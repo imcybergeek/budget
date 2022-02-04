@@ -86,166 +86,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      color: Theme.of(context).colorScheme.primary,
-                      padding: EdgeInsets.only(left: 15, top: 10, bottom: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.calendar_today,
-                                color: Colors.white,
-                                size: 12,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              CustomText(
-                                text: "2022-01",
-                                size: 12,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: 2,
-                              ),
-                              CustomText(
-                                text: "Balance",
-                                size: 12,
-                                color: Colors.white,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            children: [
-                              CustomText(
-                                text: "+19,330",
-                                color: Colors.white,
-                                size: 35,
-                                weight: FontWeight.bold,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              CustomText(
-                                text: "Expense:",
-                                color: Colors.white,
-                                size: 12,
-                              ),
-                              CustomText(
-                                text: "-670",
-                                color: Colors.white,
-                                size: 16,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              CustomText(
-                                text: "Income:",
-                                color: Colors.white,
-                                size: 12,
-                              ),
-                              CustomText(
-                                text: "+20,000",
-                                color: Colors.white,
-                                size: 16,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 100,
-                      child: Stack(
-                        children: [
-                          Container(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(color: Colors.grey, blurRadius: 4)
-                              ],
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
-                              ),
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(10, 15, 10, 20),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(bottom: 1),
-                                      child: CustomText(
-                                        text: "Budget:",
-                                        size: 10,
-                                        weight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    CustomText(
-                                      text: "5,000",
-                                      size: 18,
-                                      weight: FontWeight.bold,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  LinearPercentIndicator(
-                                    width: MediaQuery.of(context).size.width,
-                                    lineHeight: 8,
-                                    percent: 0.25,
-                                    backgroundColor: Colors.grey[100],
-                                    progressColor: Colors.blue,
-                                    barRadius: Radius.circular(10),
-                                  )
-                                ],
-                              ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(bottom: 1),
-                                      child: CustomText(
-                                        text: "Remaining Budget:",
-                                        size: 12,
-                                      ),
-                                    ),
-                                    CustomText(
-                                      text: "4,330",
-                                      size: 18,
-                                      weight: FontWeight.bold,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                    MonthlyInfo(),
+                    BudgetInfo(),
                     DailyIO(
                       "Jan 28, 2022",
                       "-160",
@@ -374,75 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
-              Opacity(
-                opacity: opacity,
-                child: SizedBox(
-                  height: 45,
-                  child: Stack(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
-                          child: Row(
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  CustomText(
-                                      color: Colors.white,
-                                      text: "2022-01",
-                                      size: 15),
-                                ],
-                              ),
-                              Spacer(),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Row(
-                                    children: [
-                                      CustomText(
-                                        color: Colors.white,
-                                        text: "Expense:",
-                                        size: 14,
-                                        weight: FontWeight.w600,
-                                      ),
-                                      CustomText(
-                                        color: Colors.white,
-                                        text: "-7,376",
-                                        size: 16,
-                                        weight: FontWeight.bold,
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      CustomText(
-                                        color: Colors.white,
-                                        text: "Income:",
-                                        size: 14,
-                                        weight: FontWeight.w600,
-                                      ),
-                                      CustomText(
-                                        color: Colors.white,
-                                        text: "+20,000",
-                                        size: 16,
-                                        weight: FontWeight.bold,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              YearlyInfo(opacity: opacity),
             ],
           ),
           bottomNavigationBar: opacity < 1
@@ -501,6 +275,264 @@ class _MyHomePageState extends State<MyHomePage> {
                 )
               : null,
           floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        ),
+      ),
+    );
+  }
+}
+
+class MonthlyInfo extends StatelessWidget {
+  const MonthlyInfo({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Theme.of(context).colorScheme.primary,
+      padding: EdgeInsets.only(left: 15, top: 10, bottom: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.calendar_today,
+                color: Colors.white,
+                size: 12,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              CustomText(
+                text: "2022-01",
+                size: 12,
+                color: Colors.white,
+              ),
+              SizedBox(
+                width: 2,
+              ),
+              CustomText(
+                text: "Balance",
+                size: 12,
+                color: Colors.white,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Row(
+            children: [
+              CustomText(
+                text: "+19,330",
+                color: Colors.white,
+                size: 35,
+                weight: FontWeight.bold,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              CustomText(
+                text: "Expense:",
+                color: Colors.white,
+                size: 12,
+              ),
+              CustomText(
+                text: "-670",
+                color: Colors.white,
+                size: 16,
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              CustomText(
+                text: "Income:",
+                color: Colors.white,
+                size: 12,
+              ),
+              CustomText(
+                text: "+20,000",
+                color: Colors.white,
+                size: 16,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BudgetInfo extends StatelessWidget {
+  const BudgetInfo({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 100,
+      child: Stack(
+        children: [
+          Container(
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 4)],
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            ),
+          ),
+          Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(10, 15, 10, 20),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 1),
+                      child: CustomText(
+                        text: "Budget:",
+                        size: 10,
+                        weight: FontWeight.bold,
+                      ),
+                    ),
+                    CustomText(
+                      text: "5,000",
+                      size: 18,
+                      weight: FontWeight.bold,
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  LinearPercentIndicator(
+                    width: MediaQuery.of(context).size.width,
+                    lineHeight: 8,
+                    percent: 0.25,
+                    backgroundColor: Colors.grey[100],
+                    progressColor: Colors.blue,
+                    barRadius: Radius.circular(10),
+                  )
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 1),
+                      child: CustomText(
+                        text: "Remaining Budget:",
+                        size: 12,
+                      ),
+                    ),
+                    CustomText(
+                      text: "4,330",
+                      size: 18,
+                      weight: FontWeight.bold,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class YearlyInfo extends StatelessWidget {
+  const YearlyInfo({
+    Key? key,
+    required this.opacity,
+  }) : super(key: key);
+
+  final double opacity;
+
+  @override
+  Widget build(BuildContext context) {
+    return Opacity(
+      opacity: opacity,
+      child: SizedBox(
+        height: 45,
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
+                child: Row(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CustomText(
+                            color: Colors.white, text: "2022-01", size: 15),
+                      ],
+                    ),
+                    Spacer(),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            CustomText(
+                              color: Colors.white,
+                              text: "Expense:",
+                              size: 14,
+                              weight: FontWeight.w600,
+                            ),
+                            CustomText(
+                              color: Colors.white,
+                              text: "-7,376",
+                              size: 16,
+                              weight: FontWeight.bold,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            CustomText(
+                              color: Colors.white,
+                              text: "Income:",
+                              size: 14,
+                              weight: FontWeight.w600,
+                            ),
+                            CustomText(
+                              color: Colors.white,
+                              text: "+20,000",
+                              size: 16,
+                              weight: FontWeight.bold,
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

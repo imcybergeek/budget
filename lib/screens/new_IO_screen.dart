@@ -11,11 +11,10 @@ class NewIOScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-      ),
-      body: Column(
-        children: [
-          Stack(
+        toolbarHeight: 100,
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(25),
+          child: Stack(
             children: [
               Container(
                 height: 65,
@@ -89,6 +88,11 @@ class NewIOScreen extends StatelessWidget {
               ),
             ],
           ),
+        ),
+        elevation: 0,
+      ),
+      body: Column(
+        children: [
           Padding(
             padding: const EdgeInsets.all(5),
             child: Card(
