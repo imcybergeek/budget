@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'route_generator.dart';
 import 'screens/app_drawer.dart';
+import 'screens/io.dart';
 
 void main() {
   runApp(MyApp());
@@ -451,7 +452,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Builder(
                         builder: (context) => CustomIcon(
-                          icon: Icons.menu_rounded,
+                          icon: FontAwesomeIcons.bars,
+                          size: 27,
                           func: () => Scaffold.of(context).openDrawer(),
                         ),
                       ),
@@ -648,19 +650,21 @@ class CustomText extends StatelessWidget {
 class CustomIcon extends StatelessWidget {
   final IconData icon;
   final VoidCallback func;
+  double size;
   CustomIcon({
     Key? key,
     required this.icon,
     required this.func,
+    this.size = 30,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        padding: EdgeInsets.fromLTRB(10, 12, 10, 20),
+        padding: EdgeInsets.fromLTRB(15, 12, 10, 20),
         icon: Icon(
           icon,
-          size: 30,
+          size: size,
           color: Colors.grey[400],
         ),
         onPressed: () => func());

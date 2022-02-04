@@ -90,7 +90,7 @@ class EditIOScreen extends StatelessWidget {
                   ),
                   Div(),
                   optionTile(
-                    leading: Icons.receipt_rounded,
+                    leading: Icons.note_alt_outlined,
                     text: "Remark",
                     trailing: "swiggy paneer",
                   ),
@@ -114,6 +114,7 @@ class EditIOScreen extends StatelessWidget {
                   CustomText(
                     text: "EDIT",
                     size: 15,
+                    color: Colors.white,
                     weight: FontWeight.w600,
                   ),
                 ],

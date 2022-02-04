@@ -7,67 +7,65 @@ class FirstPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return ListView(
       padding: EdgeInsets.all(5),
-      child: Column(
-        children: [
-          PopUpTile(
-            icon: FontAwesomeIcons.youtube,
-            color: Colors.green,
-            text: "XD",
-          ),
-          PopUpTile(
-            icon: FontAwesomeIcons.youtube,
-            color: Colors.green,
-            text: "XD",
-          ),
-          PopUpTile(
-            icon: FontAwesomeIcons.youtube,
-            color: Colors.green,
-            text: "XD",
-          ),
-          PopUpTile(
-            icon: FontAwesomeIcons.youtube,
-            color: Colors.green,
-            text: "XD",
-          ),
-          PopUpTile(
-            icon: FontAwesomeIcons.youtube,
-            color: Colors.green,
-            text: "XD",
-          ),
-          PopUpTile(
-            icon: FontAwesomeIcons.youtube,
-            color: Colors.green,
-            text: "XD",
-          ),
-          PopUpTile(
-            icon: FontAwesomeIcons.youtube,
-            color: Colors.green,
-            text: "XD",
-          ),
-          PopUpTile(
-            icon: FontAwesomeIcons.youtube,
-            color: Colors.green,
-            text: "XD",
-          ),
-          PopUpTile(
-            icon: FontAwesomeIcons.youtube,
-            color: Colors.green,
-            text: "XD",
-          ),
-          PopUpTile(
-            icon: FontAwesomeIcons.youtube,
-            color: Colors.green,
-            text: "XD",
-          ),
-          PopUpTile(
-            icon: FontAwesomeIcons.youtube,
-            color: Colors.green,
-            text: "XD",
-          ),
-        ],
-      ),
+      children: [
+        PopUpTile(
+          icon: FontAwesomeIcons.youtube,
+          color: Colors.green,
+          text: "XD",
+        ),
+        PopUpTile(
+          icon: FontAwesomeIcons.youtube,
+          color: Colors.green,
+          text: "XD",
+        ),
+        PopUpTile(
+          icon: FontAwesomeIcons.youtube,
+          color: Colors.green,
+          text: "XD",
+        ),
+        PopUpTile(
+          icon: FontAwesomeIcons.youtube,
+          color: Colors.green,
+          text: "XD",
+        ),
+        PopUpTile(
+          icon: FontAwesomeIcons.youtube,
+          color: Colors.green,
+          text: "XD",
+        ),
+        PopUpTile(
+          icon: FontAwesomeIcons.youtube,
+          color: Colors.green,
+          text: "XD",
+        ),
+        PopUpTile(
+          icon: FontAwesomeIcons.youtube,
+          color: Colors.green,
+          text: "XD",
+        ),
+        PopUpTile(
+          icon: FontAwesomeIcons.youtube,
+          color: Colors.green,
+          text: "XD",
+        ),
+        PopUpTile(
+          icon: FontAwesomeIcons.youtube,
+          color: Colors.green,
+          text: "XD",
+        ),
+        PopUpTile(
+          icon: FontAwesomeIcons.youtube,
+          color: Colors.green,
+          text: "XD",
+        ),
+        PopUpTile(
+          icon: FontAwesomeIcons.youtube,
+          color: Colors.green,
+          text: "XD",
+        ),
+      ],
     );
   }
 }
