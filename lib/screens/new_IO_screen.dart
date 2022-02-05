@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:budget/main.dart';
 import 'package:budget/screens/popUp_screen.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class NewIOScreen extends StatelessWidget {
+class NewIOScreen extends StatefulWidget {
   final String data;
   const NewIOScreen({Key? key, required this.data}) : super(key: key);
 
+  @override
+  State<NewIOScreen> createState() => _NewIOScreenState();
+}
+
+class _NewIOScreenState extends State<NewIOScreen> {
+  IconData buttonIcon = Icons.calculate_outlined;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,61 +98,193 @@ class NewIOScreen extends StatelessWidget {
         ),
         elevation: 0,
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(5),
-            child: Card(
-              child: Column(
-                children: [
-                  optionTile(
-                    leading: Icons.calendar_today,
-                    text: "Date  Today",
-                    trailing: Icons.arrow_forward_ios,
-                  ),
-                  Div(),
-                  optionTile(
-                    leading: Icons.access_time_filled,
-                    text: "Time  18:33",
-                    trailing: Icons.arrow_forward_ios,
-                  ),
-                  Div(),
-                  Stack(
-                    children: [
-                      ListTile(
-                        dense: true,
-                        visualDensity:
-                            VisualDensity(horizontal: -4, vertical: -4),
-                        leading: Icon(
-                          FontAwesomeIcons.pen,
-                          size: 16,
-                        ),
-                        title: CustomText(
-                          text: "Remark",
-                          size: 16,
-                        ),
-                      ),
-                      ListTile(
-                        dense: true,
-                        visualDensity:
-                            VisualDensity(horizontal: -4, vertical: -4),
-                        title: Padding(
-                          padding: const EdgeInsets.only(left: 125),
-                          child: TextField(
-                            keyboardType: TextInputType.multiline,
-                            maxLines: null,
-                            decoration: new InputDecoration.collapsed(
-                                hintText: 'Write a note'),
+      body: SlidingUpPanel(
+        renderPanelSheet: false,
+        boxShadow: [BoxShadow(blurRadius: 0, color: Colors.transparent)],
+        maxHeight: 350,
+        minHeight: 100,
+        panel: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 50),
+              child: Container(
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.horizontal_rule_rounded,
+                      size: 50,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Row(
+                        children: [
+                          CalcBtn("7"),
+                          CalcBtn("8"),
+                          CalcBtn("9"),
+                          CalcBtn(
+                            "÷",
+                            right: 5,
+                            color: true,
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Row(
+                        children: [
+                          CalcBtn("4"),
+                          CalcBtn("5"),
+                          CalcBtn("6"),
+                          CalcBtn(
+                            "x",
+                            right: 5,
+                            color: true,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Row(
+                        children: [
+                          CalcBtn("1"),
+                          CalcBtn("2"),
+                          CalcBtn("3"),
+                          CalcBtn(
+                            "-",
+                            right: 5,
+                            color: true,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Row(
+                        children: [
+                          CalcBtn("."),
+                          CalcBtn("0"),
+                          CalcBtn(
+                            "C",
+                            color: true,
+                          ),
+                          CalcBtn(
+                            "+",
+                            right: 5,
+                            color: true,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
+            Positioned(
+              top: 14,
+              right: 16,
+              child: FloatingActionButton(
+                onPressed: () {},
+                child: Icon(buttonIcon),
+              ),
+            ),
+          ],
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: Card(
+                child: Column(
+                  children: [
+                    optionTile(
+                      leading: Icons.calendar_today,
+                      text: "Date  Today",
+                      trailing: Icons.arrow_forward_ios,
+                    ),
+                    Div(),
+                    optionTile(
+                      leading: Icons.access_time_filled,
+                      text: "Time  18:33",
+                      trailing: Icons.arrow_forward_ios,
+                    ),
+                    Div(),
+                    Stack(
+                      children: [
+                        ListTile(
+                          dense: true,
+                          visualDensity:
+                              VisualDensity(horizontal: -4, vertical: -4),
+                          leading: Icon(
+                            FontAwesomeIcons.pen,
+                            size: 16,
+                          ),
+                          title: CustomText(
+                            text: "Remark",
+                            size: 16,
+                          ),
+                        ),
+                        ListTile(
+                          dense: true,
+                          visualDensity:
+                              VisualDensity(horizontal: -4, vertical: -4),
+                          title: Padding(
+                            padding: const EdgeInsets.only(left: 125),
+                            child: TextField(
+                              keyboardType: TextInputType.multiline,
+                              maxLines: null,
+                              decoration: new InputDecoration.collapsed(
+                                  hintText: 'Write a note'),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CalcBtn extends StatelessWidget {
+  final String num;
+  final double right;
+  final bool color;
+
+  const CalcBtn(
+    this.num, {
+    Key? key,
+    this.right = 0,
+    this.color = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.only(left: 10, right: right),
+        child: SizedBox(
+          height: 50,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: color ? Colors.blue : Colors.grey[200],
+            ),
+            onPressed: () {},
+            child: CustomText(
+              text: num,
+              size: 25,
+              color: color ? Colors.white : Colors.black,
+            ),
           ),
-        ],
+        ),
       ),
     );
   }

@@ -77,7 +77,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           backgroundColor: Colors.grey[200],
-          extendBodyBehindAppBar: true,
           body: Stack(
             children: [
               SingleChildScrollView(
