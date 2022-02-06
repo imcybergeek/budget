@@ -239,9 +239,15 @@ class _MyHomePageState extends State<MyHomePage> {
                           arguments: 'Hello there from the first page!',
                         ),
                       ),
-                      // CustomIcon(
-                      //   icon: Icons.pie_chart_rounded,
-                      // ),
+                      CustomIcon(
+                        icon: Icons.pie_chart_rounded,
+                        func: () =>
+                            // Pushing a named route
+                            Navigator.of(context).pushNamed(
+                          '/fifth',
+                          arguments: 'Hello there from the first page!',
+                        ),
+                      ),
                       // CustomIcon(
                       //   icon: Icons.folder_special,
                       //   // ),
@@ -263,12 +269,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         '/second',
                         arguments: 'Hello there from the first page!',
                       );
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return popUpScreen();
-                        },
-                      );
+                      Future.delayed(const Duration(milliseconds: 500), () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return popUpScreen();
+                          },
+                        );
+                      });
                     },
                   ),
                 )

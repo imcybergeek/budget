@@ -33,6 +33,7 @@ dependencies:
   font_awesome_flutter:
   percent_indicator:
   sliding_up_panel:
+  animated_button:
 
 dev_dependencies:
   flutter_lints: ^1.0.0

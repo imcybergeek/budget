@@ -1,6 +1,7 @@
 import 'package:budget/screens/category_screen.dart';
 import 'package:budget/screens/new_IO_screen.dart';
 import 'package:budget/screens/edit_IO_screen.dart';
+import 'package:budget/screens/statistics_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/main.dart';
 
@@ -43,6 +44,17 @@ class RouteGenerator {
         if (args is String) {
           return MaterialPageRoute(
             builder: (_) => CategoryScreen(
+              data: args,
+            ),
+          );
+        }
+        return _errorRoute();
+
+      case '/fifth':
+        // Validation of correct data type
+        if (args is String) {
+          return MaterialPageRoute(
+            builder: (_) => StatisticsScreen(
               data: args,
             ),
           );

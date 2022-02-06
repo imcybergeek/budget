@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:budget/main.dart';
 import 'package:budget/screens/popUp_screen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:animated_button/animated_button.dart';
 
 class NewIOScreen extends StatefulWidget {
   final String data;
@@ -13,6 +14,7 @@ class NewIOScreen extends StatefulWidget {
 }
 
 class _NewIOScreenState extends State<NewIOScreen> {
+  double minHeight = 100;
   IconData buttonIcon = Icons.calculate_outlined;
   @override
   Widget build(BuildContext context) {
@@ -99,10 +101,11 @@ class _NewIOScreenState extends State<NewIOScreen> {
         elevation: 0,
       ),
       body: SlidingUpPanel(
+        onPanelSlide: () => setState(() => minHeight = 100),
         renderPanelSheet: false,
         boxShadow: [BoxShadow(blurRadius: 0, color: Colors.transparent)],
         maxHeight: 350,
-        minHeight: 100,
+        minHeight: minHeight,
         panel: Stack(
           children: [
             Padding(
@@ -117,7 +120,7 @@ class _NewIOScreenState extends State<NewIOScreen> {
                       color: Theme.of(context).colorScheme.primary,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
+                      padding: const EdgeInsets.only(bottom: 5),
                       child: Row(
                         children: [
                           CalcBtn("7"),
@@ -132,7 +135,7 @@ class _NewIOScreenState extends State<NewIOScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
+                      padding: const EdgeInsets.only(bottom: 5),
                       child: Row(
                         children: [
                           CalcBtn("4"),
@@ -147,7 +150,7 @@ class _NewIOScreenState extends State<NewIOScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
+                      padding: const EdgeInsets.only(bottom: 5),
                       child: Row(
                         children: [
                           CalcBtn("1"),
@@ -162,7 +165,7 @@ class _NewIOScreenState extends State<NewIOScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
+                      padding: const EdgeInsets.only(bottom: 5),
                       child: Row(
                         children: [
                           CalcBtn("."),
@@ -187,7 +190,11 @@ class _NewIOScreenState extends State<NewIOScreen> {
               top: 14,
               right: 16,
               child: FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    minHeight == 350 ? minHeight = 100 : minHeight = 350;
+                  });
+                },
                 child: Icon(buttonIcon),
               ),
             ),
@@ -270,19 +277,23 @@ class CalcBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: EdgeInsets.only(left: 10, right: right),
+        padding: EdgeInsets.only(left: 5, right: right),
         child: SizedBox(
-          height: 50,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: color ? Colors.blue : Colors.grey[200],
-            ),
-            onPressed: () {},
-            child: CustomText(
-              text: num,
-              size: 25,
-              color: color ? Colors.white : Colors.black,
-            ),
+          height: 55,
+          child: LayoutBuilder(
+            builder: (BuildContext context, constraints) {
+              return AnimatedButton(
+                height: constraints.maxHeight,
+                width: constraints.maxWidth,
+                color: (color ? Colors.blue : Colors.grey[200])!,
+                onPressed: () {},
+                child: CustomText(
+                  text: num,
+                  size: 25,
+                  color: color ? Colors.white : Colors.black,
+                ),
+              );
+            },
           ),
         ),
       ),
@@ -321,3 +332,12 @@ class optionTile extends StatelessWidget {
     );
   }
 }
+
+// onTap: () {
+//         widget.onPressed();
+//         Future.delayed(const Duration(milliseconds: 50), () {
+//           setState(() {
+//             _position = 3;
+//           });
+//         });
+//       },
