@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:budget/main.dart';
 import 'package:budget/screens/popUp_screen.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:animated_button/animated_button.dart';
+import 'package:budget/custom/sliding_panel.dart';
+import 'package:budget/custom/animated_button.dart';
 
 class NewIOScreen extends StatefulWidget {
   final String data;
@@ -14,8 +14,6 @@ class NewIOScreen extends StatefulWidget {
 }
 
 class _NewIOScreenState extends State<NewIOScreen> {
-  double minHeight = 100;
-  IconData buttonIcon = Icons.calculate_outlined;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,104 +99,85 @@ class _NewIOScreenState extends State<NewIOScreen> {
         elevation: 0,
       ),
       body: SlidingUpPanel(
-        onPanelSlide: () => setState(() => minHeight = 100),
         renderPanelSheet: false,
         boxShadow: [BoxShadow(blurRadius: 0, color: Colors.transparent)],
         maxHeight: 350,
-        minHeight: minHeight,
-        panel: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 50),
-              child: Container(
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.horizontal_rule_rounded,
-                      size: 50,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 5),
-                      child: Row(
-                        children: [
-                          CalcBtn("7"),
-                          CalcBtn("8"),
-                          CalcBtn("9"),
-                          CalcBtn(
-                            "÷",
-                            right: 5,
-                            color: true,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 5),
-                      child: Row(
-                        children: [
-                          CalcBtn("4"),
-                          CalcBtn("5"),
-                          CalcBtn("6"),
-                          CalcBtn(
-                            "x",
-                            right: 5,
-                            color: true,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 5),
-                      child: Row(
-                        children: [
-                          CalcBtn("1"),
-                          CalcBtn("2"),
-                          CalcBtn("3"),
-                          CalcBtn(
-                            "-",
-                            right: 5,
-                            color: true,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 5),
-                      child: Row(
-                        children: [
-                          CalcBtn("."),
-                          CalcBtn("0"),
-                          CalcBtn(
-                            "C",
-                            color: true,
-                          ),
-                          CalcBtn(
-                            "+",
-                            right: 5,
-                            color: true,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+        minHeight: 100,
+        panel: Padding(
+          padding: const EdgeInsets.only(top: 50),
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 55,
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Row(
+                    children: [
+                      CalcBtn("7"),
+                      CalcBtn("8"),
+                      CalcBtn("9"),
+                      CalcBtn(
+                        "÷",
+                        right: 5,
+                        color: true,
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Row(
+                    children: [
+                      CalcBtn("4"),
+                      CalcBtn("5"),
+                      CalcBtn("6"),
+                      CalcBtn(
+                        "x",
+                        right: 5,
+                        color: true,
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Row(
+                    children: [
+                      CalcBtn("1"),
+                      CalcBtn("2"),
+                      CalcBtn("3"),
+                      CalcBtn(
+                        "-",
+                        right: 5,
+                        color: true,
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Row(
+                    children: [
+                      CalcBtn("."),
+                      CalcBtn("0"),
+                      CalcBtn(
+                        "C",
+                        color: true,
+                      ),
+                      CalcBtn(
+                        "+",
+                        right: 5,
+                        color: true,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            Positioned(
-              top: 14,
-              right: 16,
-              child: FloatingActionButton(
-                onPressed: () {
-                  setState(() {
-                    minHeight == 350 ? minHeight = 100 : minHeight = 350;
-                  });
-                },
-                child: Icon(buttonIcon),
-              ),
-            ),
-          ],
+          ),
         ),
         body: Column(
           children: [
@@ -341,3 +320,49 @@ class optionTile extends StatelessWidget {
 //           });
 //         });
 //       },
+
+// child: Stack(
+//                         clipBehavior: Clip.none,
+//                         children: [
+//                           child!,
+//                           Padding(
+//                             padding: const EdgeInsets.only(top: 50),
+//                             child: SizedBox(
+//                               height: 50,
+//                               width: double.infinity,
+//                               child: ElevatedButton(
+//                                 style: ElevatedButton.styleFrom(
+//                                     shadowColor: Colors.transparent,
+//                                     primary: Colors.white),
+//                                 onPressed: () {
+//                                   _ac.value == 1
+//                                       ? _ac.value = 0
+//                                       : _ac.value = 1;
+//                                 },
+//                                 child: Icon(
+//                                   Icons.horizontal_rule_rounded,
+//                                   size: 50,
+//                                   color: Theme.of(context).colorScheme.primary,
+//                                 ),
+//                               ),
+//                             ),
+//                           ),
+//                           Positioned(
+//                             top: 13,
+//                             right: 16,
+//                             child: FloatingActionButton(
+//                               onPressed: () {
+//                                 _ac.value == 1 ? _ac.value = 0 : _ac.value = 1;
+//                               },
+//                               child: IconButton(
+//                                 icon: Icon(buttonIcon),
+//                                 onPressed: () {
+//                                   _ac.value == 1
+//                                       ? _ac.value = 0
+//                                       : _ac.value = 1;
+//                                 },
+//                               ),
+//                             ),
+//                           ),
+//                         ],
+//                       ),

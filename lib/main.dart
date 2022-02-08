@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'route_generator.dart';
 import 'screens/app_drawer.dart';
-import 'screens/io.dart';
 
 void main() {
   runApp(MyApp());

@@ -1,4 +1,4 @@
-import 'package:animated_button/animated_button.dart';
+import 'package:budget/custom/animated_button.dart';
 import 'package:flutter/material.dart';
 
 class StatisticsScreen extends StatelessWidget {
