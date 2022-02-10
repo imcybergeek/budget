@@ -36,7 +36,7 @@ class NewCategory extends StatelessWidget {
                   ),
                 ),
                 Flexible(
-                  child: TextFormField(
+                  child: TextField(
                     maxLength: 15,
                     decoration: const InputDecoration(
                         border: UnderlineInputBorder(),

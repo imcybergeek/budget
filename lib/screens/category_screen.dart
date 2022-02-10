@@ -68,9 +68,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       children: [
                         Icon(
                           Icons.add,
-                          size: 30,
+                          size: 25,
                         ),
-                        CustomText(text: "ADD CATEGORY", size: 25)
+                        CustomText(text: "ADD CATEGORY", size: 20)
                       ],
                     ),
                   ),
