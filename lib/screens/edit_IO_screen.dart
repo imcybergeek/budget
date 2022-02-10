@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:budget/main.dart';
-import 'package:budget/screens/popUp_screen.dart';
+import 'package:budget/screens/sub_screens/popUp_screen.dart';
 
 class EditIOScreen extends StatelessWidget {
   final String data;
@@ -13,7 +13,7 @@ class EditIOScreen extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return popUpScreen();
+        return PopUpScreen();
       },
     );
   }
@@ -55,7 +55,7 @@ class EditIOScreen extends StatelessWidget {
                           showModalBottomSheet(
                             context: context,
                             builder: (BuildContext context) {
-                              return popUpScreen();
+                              return PopUpScreen();
                             },
                           );
                         },

@@ -8,13 +8,11 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      // Important: Remove any padding from the ListView.
-      padding: EdgeInsets.zero,
       children: [
         SizedBox(
           height: 135,
           child: DrawerHeader(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.blue,
             ),
             child: Center(
@@ -36,44 +34,47 @@ class AppDrawer extends StatelessWidget {
             weight: FontWeight.bold,
           ),
         ),
-        DrawerTile(
+        const DrawerTile(
           icon: FontAwesomeIcons.ad,
           text: "Remove Ads",
         ),
-        DrawerTile(
+        const DrawerTile(
           icon: FontAwesomeIcons.paintBrush,
           text: "Switch Colors",
         ),
-        DrawerTile(
+        const DrawerTile(
           icon: FontAwesomeIcons.fileExcel,
           text: "Excel Export",
         ),
-        DrawerTile(
+        const DrawerTile(
           icon: FontAwesomeIcons.sun,
           text: "Dark Theme",
         ),
-        DrawerTile(
+        const DrawerTile(
           icon: FontAwesomeIcons.searchengin,
           text: "Search",
         ),
-        Div(),
-        DrawerTile(
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 5),
+          child: Div(),
+        ),
+        const DrawerTile(
           icon: Icons.restore,
           text: "Backup/ Restore",
         ),
-        DrawerTile(
+        const DrawerTile(
           icon: Icons.update,
           text: "Check Update",
         ),
-        DrawerTile(
+        const DrawerTile(
           icon: Icons.star,
           text: "Grade",
         ),
-        DrawerTile(
+        const DrawerTile(
           icon: Icons.share,
           text: "Share",
         ),
-        DrawerTile(
+        const DrawerTile(
           icon: Icons.settings,
           text: "Settings",
         ),

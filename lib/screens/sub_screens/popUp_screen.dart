@@ -1,10 +1,9 @@
 import 'package:budget/main.dart';
 import 'package:flutter/material.dart';
-import 'first_page.dart';
-import 'second_page.dart';
+import 'package:budget/screens/io.dart';
 
-class popUpScreen extends StatelessWidget {
-  const popUpScreen({Key? key}) : super(key: key);
+class PopUpScreen extends StatelessWidget {
+  const PopUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +46,10 @@ class popUpScreen extends StatelessWidget {
           ],
         ),
         body: TabBarView(
-          children: [FirstPage(), SecondPage()],
+          children: [
+            PopUpList(expense),
+            PopUpList(income),
+          ],
         ),
       ),
     );
@@ -88,8 +90,28 @@ class PopUpTile extends StatelessWidget {
             size: 16,
           ),
         ),
-        Div(),
       ],
+    );
+  }
+}
+
+class PopUpList extends StatelessWidget {
+  final List type;
+  const PopUpList(this.type, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      separatorBuilder: ((context, index) => Div()),
+      itemCount: type.length,
+      itemBuilder: (context, index) {
+        final item = type[index];
+        return PopUpTile(
+          icon: item.icon!,
+          color: item.color!,
+          text: item.text!,
+        );
+      },
     );
   }
 }

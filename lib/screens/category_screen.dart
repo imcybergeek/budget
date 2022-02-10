@@ -1,7 +1,6 @@
 import 'package:budget/screens/io.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/main.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'io.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -45,52 +44,39 @@ class _CategoryScreenState extends State<CategoryScreen> {
         ),
         body: TabBarView(
           children: [
-            ReorderableListView(
-              onReorder: (oldIndex, newIndex) => setState(() {
-                final index = newIndex > oldIndex ? newIndex - 1 : newIndex;
-                final key = expense.removeAt(oldIndex);
-                expense.insert(index, key);
-              }),
-              padding: EdgeInsets.all(5),
-              children: [
-                for (final IO in expense)
-                  PopUpTile(
-                    key: ValueKey(IO.key),
-                    icon: IO.icon!,
-                    color: IO.color!,
-                    text: IO.text!,
-                  ),
-              ],
-            ),
-            ReorderableListView(
-              onReorder: (oldIndex, newIndex) => setState(() {
-                final index = newIndex > oldIndex ? newIndex - 1 : newIndex;
-                final key = income.removeAt(oldIndex);
-                income.insert(index, key);
-              }),
-              padding: EdgeInsets.all(5),
-              children: [
-                for (final IO in income)
-                  PopUpTile(
-                    key: ValueKey(IO.key),
-                    icon: IO.icon!,
-                    color: IO.color!,
-                    text: IO.text!,
-                  ),
-              ],
-            ),
+            reorderableListMethod(expense),
+            reorderableListMethod(income),
           ],
         ),
       ),
     );
   }
+
+  ReorderableListView reorderableListMethod(List type) {
+    return ReorderableListView(
+      onReorder: (oldIndex, newIndex) => setState(() {
+        final index = newIndex > oldIndex ? newIndex - 1 : newIndex;
+        final key = type.removeAt(oldIndex);
+        type.insert(index, key);
+      }),
+      children: [
+        for (final io in type)
+          CategoryTile(
+            key: ValueKey(io.key),
+            icon: io.icon!,
+            color: io.color!,
+            text: io.text!,
+          ),
+      ],
+    );
+  }
 }
 
-class PopUpTile extends StatelessWidget {
+class CategoryTile extends StatelessWidget {
   final IconData icon;
   final Color color;
   final String text;
-  const PopUpTile({
+  const CategoryTile({
     Key? key,
     required this.icon,
     required this.color,

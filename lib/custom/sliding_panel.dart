@@ -12,6 +12,9 @@ import 'dart:math';
 
 import 'package:flutter/physics.dart';
 
+import 'new_IO_controller.dart';
+import 'package:get/get.dart';
+
 enum SlideDirection {
   UP,
   DOWN,
@@ -207,7 +210,6 @@ class SlidingUpPanel extends StatefulWidget {
 
 class _SlidingUpPanelState extends State<SlidingUpPanel>
     with SingleTickerProviderStateMixin {
-  IconData buttonIcon = Icons.calculate_outlined;
   late AnimationController _ac;
   late ScrollController _sc;
 
@@ -312,6 +314,7 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                 child: AnimatedBuilder(
                   animation: _ac,
                   builder: (context, child) {
+                    final NewIOController controller = Get.find();
                     return Container(
                       height:
                           _ac.value * (widget.maxHeight - widget.minHeight) +
@@ -336,10 +339,8 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                             child: SizedBox(
                               height: 50,
                               width: double.infinity,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    shadowColor: Colors.transparent,
-                                    primary: Colors.white),
+                              child: MaterialButton(
+                                splashColor: Colors.blue,
                                 onPressed: () {
                                   _ac.value == 1
                                       ? _ac.value = 0
@@ -356,17 +357,35 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                           Positioned(
                             top: 13,
                             right: 16,
-                            child: FloatingActionButton(
-                              onPressed: () {
-                                _ac.value == 1 ? _ac.value = 0 : _ac.value = 1;
-                              },
-                              child: IconButton(
-                                icon: Icon(buttonIcon),
+                            child: Obx(
+                              () => FloatingActionButton(
                                 onPressed: () {
-                                  _ac.value == 1
-                                      ? _ac.value = 0
-                                      : _ac.value = 1;
+                                  if (_ac.value == 1) {
+                                    if (controller.changed.value) {
+                                      controller.compute();
+                                    } else {
+                                      _ac.value = 0;
+                                    }
+                                  } else {
+                                    _ac.value = 1;
+                                  }
                                 },
+                                child: IconButton(
+                                  icon: Icon(controller.changed.value
+                                      ? Icons.check
+                                      : Icons.calculate_outlined),
+                                  onPressed: () {
+                                    if (_ac.value == 1) {
+                                      if (controller.changed.value) {
+                                        controller.compute();
+                                      } else {
+                                        _ac.value = 0;
+                                      }
+                                    } else {
+                                      _ac.value = 1;
+                                    }
+                                  },
+                                ),
                               ),
                             ),
                           ),

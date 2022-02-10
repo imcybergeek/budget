@@ -1,22 +1,20 @@
+import 'package:budget/custom/new_IO_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:budget/main.dart';
-import 'package:budget/screens/popUp_screen.dart';
+import 'package:budget/screens/sub_screens/popUp_screen.dart';
 import 'package:budget/custom/sliding_panel.dart';
 import 'package:budget/custom/animated_button.dart';
+import 'package:get/get.dart';
 
-class NewIOScreen extends StatefulWidget {
-  final String data;
-  const NewIOScreen({Key? key, required this.data}) : super(key: key);
+class NewIOScreen extends StatelessWidget {
+  const NewIOScreen({Key? key}) : super(key: key);
 
-  @override
-  State<NewIOScreen> createState() => _NewIOScreenState();
-}
-
-class _NewIOScreenState extends State<NewIOScreen> {
   @override
   Widget build(BuildContext context) {
+    final NewIOController controller = Get.put(NewIOController());
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         toolbarHeight: 100,
         bottom: PreferredSize(
@@ -48,7 +46,7 @@ class _NewIOScreenState extends State<NewIOScreen> {
                                 showModalBottomSheet(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return popUpScreen();
+                                    return PopUpScreen();
                                   },
                                 );
                               },
@@ -65,10 +63,12 @@ class _NewIOScreenState extends State<NewIOScreen> {
                             children: [
                               Row(
                                 children: [
-                                  CustomText(
-                                    text: "0",
-                                    size: 30,
-                                    color: Colors.white,
+                                  Obx(
+                                    () => CustomText(
+                                      text: controller.computed.value,
+                                      size: 30,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                   Icon(
                                     Icons.arrow_drop_down,
@@ -79,12 +79,14 @@ class _NewIOScreenState extends State<NewIOScreen> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(right: 5),
-                                child: CustomText(
-                                  text: "0=",
-                                  size: 15,
-                                  color: Colors.white,
+                                child: Obx(
+                                  () => CustomText(
+                                    text: controller.number.value,
+                                    size: 15,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ],
@@ -99,6 +101,7 @@ class _NewIOScreenState extends State<NewIOScreen> {
         elevation: 0,
       ),
       body: SlidingUpPanel(
+        defaultPanelState: PanelState.OPEN,
         renderPanelSheet: false,
         boxShadow: [BoxShadow(blurRadius: 0, color: Colors.transparent)],
         maxHeight: 350,
@@ -240,23 +243,29 @@ class _NewIOScreenState extends State<NewIOScreen> {
   }
 }
 
-class CalcBtn extends StatelessWidget {
-  final String num;
+class CalcBtn extends StatefulWidget {
+  final String no;
   final double right;
   final bool color;
 
   const CalcBtn(
-    this.num, {
+    this.no, {
     Key? key,
     this.right = 0,
     this.color = false,
   }) : super(key: key);
 
   @override
+  State<CalcBtn> createState() => _CalcBtnState();
+}
+
+class _CalcBtnState extends State<CalcBtn> {
+  @override
   Widget build(BuildContext context) {
+    final NewIOController controller = Get.find();
     return Expanded(
       child: Padding(
-        padding: EdgeInsets.only(left: 5, right: right),
+        padding: EdgeInsets.only(left: 5, right: widget.right),
         child: SizedBox(
           height: 55,
           child: LayoutBuilder(
@@ -264,12 +273,28 @@ class CalcBtn extends StatelessWidget {
               return AnimatedButton(
                 height: constraints.maxHeight,
                 width: constraints.maxWidth,
-                color: (color ? Colors.blue : Colors.grey[200])!,
-                onPressed: () {},
+                color: (widget.color ? Colors.blue : Colors.grey[200])!,
+                onPressed: () {
+                  if (widget.no == "C") {
+                    controller.removeLast();
+                  } else if (widget.no == "÷") {
+                    controller.expression("/");
+                  } else if (widget.no == "x") {
+                    controller.expression("*");
+                  } else if (widget.no == "-") {
+                    controller.expression(widget.no);
+                  } else if (widget.no == "+") {
+                    controller.expression(widget.no);
+                  } else if (widget.no == ".") {
+                    controller.expression(widget.no);
+                  } else {
+                    controller.numeric(widget.no);
+                  }
+                },
                 child: CustomText(
-                  text: num,
+                  text: widget.no,
                   size: 25,
-                  color: color ? Colors.white : Colors.black,
+                  color: widget.color ? Colors.white : Colors.black,
                 ),
               );
             },

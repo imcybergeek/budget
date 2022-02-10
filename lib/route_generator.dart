@@ -15,13 +15,9 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => MyHomePage());
       case '/second':
         // Validation of correct data type
-        if (args is String) {
-          return MaterialPageRoute(
-            builder: (_) => NewIOScreen(
-              data: args,
-            ),
-          );
-        }
+        return MaterialPageRoute(
+          builder: (_) => const NewIOScreen(),
+        );
         // If args is not of the correct type, return an error page.
         // You can also throw an exception while in development.
         return _errorRoute();

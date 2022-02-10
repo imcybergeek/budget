@@ -1,10 +1,10 @@
-import 'package:budget/screens/popUp_screen.dart';
+import 'package:budget/screens/sub_screens/popUp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'route_generator.dart';
-import 'screens/app_drawer.dart';
+import 'screens/sub_screens/app_drawer.dart';
 
 void main() {
   runApp(MyApp());
@@ -264,15 +264,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     onPressed: () {
                       // Pushing a named route
-                      Navigator.of(context).pushNamed(
-                        '/second',
-                        arguments: 'Hello there from the first page!',
-                      );
+                      Navigator.of(context).pushNamed('/second');
                       Future.delayed(const Duration(milliseconds: 500), () {
                         showModalBottomSheet(
                           context: context,
                           builder: (BuildContext context) {
-                            return popUpScreen();
+                            return PopUpScreen();
                           },
                         );
                       });
@@ -394,7 +391,9 @@ class BudgetInfo extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
-              boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 4)],
+              boxShadow: [
+                BoxShadow(color: Colors.grey.shade400, blurRadius: 3)
+              ],
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
@@ -664,12 +663,14 @@ class CustomText extends StatelessWidget {
   final double size;
   FontWeight? weight;
   Color? color;
+  VoidCallback? func;
   CustomText(
       {Key? key,
       required this.text,
       required this.size,
       this.weight,
-      this.color})
+      this.color,
+      this.func})
       : super(key: key);
 
   @override
