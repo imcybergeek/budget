@@ -2,6 +2,7 @@ import 'package:budget/screens/sub_screens/popUp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'route_generator.dart';
 import 'screens/sub_screens/app_drawer.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         SystemUiOverlayStyle(statusBarColor: Colors.transparent);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: myOverlayStyle,
-      child: MaterialApp(
+      child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Budget App',
         theme: ThemeData(

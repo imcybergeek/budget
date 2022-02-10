@@ -1,6 +1,8 @@
 import 'package:budget/screens/io.dart';
+import 'package:budget/screens/new_category.dart';
 import 'package:flutter/material.dart';
 import 'package:budget/main.dart';
+import 'package:get/get.dart';
 import 'io.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -42,10 +44,39 @@ class _CategoryScreenState extends State<CategoryScreen> {
             ],
           ),
         ),
-        body: TabBarView(
+        body: Stack(
           children: [
-            reorderableListMethod(expense),
-            reorderableListMethod(income),
+            TabBarView(
+              children: [
+                reorderableListMethod(expense),
+                reorderableListMethod(income),
+              ],
+            ),
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: SizedBox(
+                  height: 50,
+                  child: MaterialButton(
+                    splashColor: Colors.lightBlueAccent.shade100,
+                    color: Colors.white,
+                    onPressed: () {
+                      Get.to(NewCategory());
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.add,
+                          size: 30,
+                        ),
+                        CustomText(text: "ADD CATEGORY", size: 25)
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

@@ -25,12 +25,14 @@ class StatisticsScreen extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width / 2.5,
                 child: Tab(
+                  icon: Icon(Icons.pie_chart),
                   text: "CATEGORY",
                 ),
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width / 2.5,
                 child: Tab(
+                  icon: Icon(Icons.stacked_bar_chart),
                   text: "STATISTICS",
                 ),
               ),
@@ -39,55 +41,77 @@ class StatisticsScreen extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.all(10),
-                  width: 250,
-                  child: MaterialButton(
-                    color: Colors.blueAccent,
-                    height: 35,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30)),
-                    onPressed: () {},
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.calendar_today,
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        CustomText(
-                          text: "Feb 1, 2022 - Feb 28, 2022",
-                          size: 15,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Row(
-                  children: [
-                    SelectType(
-                      controller: controller,
-                      text: "Expenses",
-                    ),
-                    SelectType(
-                      controller: controller,
-                      text: "Income",
-                    ),
-                  ],
-                )
-              ],
-            ),
-            Text(data),
+            Filters(controller: controller, date: "Feb 1, 2022 - Feb 28, 2022"),
+            Filters(controller: controller, date: "2022"),
           ],
         ),
       ),
+    );
+  }
+}
+
+class Filters extends StatelessWidget {
+  final String date;
+  const Filters({
+    Key? key,
+    required this.date,
+    required this.controller,
+  }) : super(key: key);
+
+  final StatsController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              height: 35,
+              margin: EdgeInsets.all(10),
+              child: MaterialButton(
+                color: Colors.blueAccent,
+                shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30)),
+                onPressed: () {},
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.calendar_today,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    CustomText(
+                      text: date,
+                      size: 15,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Row(
+          children: [
+            SelectType(
+              controller: controller,
+              text: "Expenses",
+            ),
+            SelectType(
+              controller: controller,
+              text: "Income",
+            ),
+          ],
+        )
+      ],
     );
   }
 }
