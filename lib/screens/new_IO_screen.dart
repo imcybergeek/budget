@@ -6,6 +6,7 @@ import 'package:budget/screens/sub_screens/popUp_screen.dart';
 import 'package:budget/custom/sliding_panel.dart';
 import 'package:budget/custom/animated_button.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class NewIOScreen extends StatelessWidget {
   const NewIOScreen({Key? key}) : super(key: key);
@@ -186,53 +187,75 @@ class NewIOScreen extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(5),
-              child: Card(
-                child: Column(
-                  children: [
-                    optionTile(
-                      leading: Icons.calendar_today,
-                      text: "Date  Today",
-                      trailing: Icons.arrow_forward_ios,
-                    ),
-                    Div(),
-                    optionTile(
-                      leading: Icons.access_time_filled,
-                      text: "Time  18:33",
-                      trailing: Icons.arrow_forward_ios,
-                    ),
-                    Div(),
-                    Stack(
-                      children: [
-                        ListTile(
-                          dense: true,
-                          visualDensity:
-                              VisualDensity(horizontal: -4, vertical: -4),
-                          leading: Icon(
-                            FontAwesomeIcons.pen,
-                            size: 16,
-                          ),
-                          title: CustomText(
-                            text: "Remark",
-                            size: 16,
-                          ),
-                        ),
-                        ListTile(
-                          dense: true,
-                          visualDensity:
-                              VisualDensity(horizontal: -4, vertical: -4),
-                          title: Padding(
-                            padding: const EdgeInsets.only(left: 125),
-                            child: TextField(
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null,
-                              decoration: new InputDecoration.collapsed(
-                                  hintText: 'Write a note'),
+              child: Obx(
+                () => Card(
+                  child: Column(
+                    children: [
+                      optionTile(
+                        func: (() {
+                          showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime.utc(DateTime.now().year,
+                                      DateTime.now().month, 1),
+                                  lastDate: DateTime.utc(DateTime.now().year,
+                                      DateTime.now().month + 1, 0))
+                              .then((value) => controller.date.value =
+                                  "${value == null ? controller.date.value : DateFormat('MMM dd, yyyy').format(value)}");
+                        }),
+                        leading: Icons.calendar_today,
+                        text: "Date  ${controller.date.value}",
+                        trailing: Icons.arrow_forward_ios,
+                      ),
+                      Div(),
+                      optionTile(
+                        func: (() {
+                          showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.now())
+                              .then((value) => controller.time.value =
+                                  "${value == null ? controller.time.value : value.format(context)}");
+                        }),
+                        leading: Icons.access_time_filled,
+                        text: "Time  ${controller.time.value}",
+                        trailing: Icons.arrow_forward_ios,
+                      ),
+                      Div(),
+                      Stack(
+                        children: [
+                          ListTile(
+                            dense: true,
+                            visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
+                            leading: Icon(
+                              FontAwesomeIcons.pen,
+                              size: 16,
+                            ),
+                            title: CustomText(
+                              text: "Remark",
+                              size: 16,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          ListTile(
+                            dense: true,
+                            visualDensity:
+                                VisualDensity(horizontal: -4, vertical: -4),
+                            title: Padding(
+                              padding: const EdgeInsets.only(left: 125),
+                              child: TextField(
+                                onChanged: (value) =>
+                                    controller.text.value = value,
+                                keyboardType: TextInputType.multiline,
+                                maxLines: null,
+                                decoration: new InputDecoration.collapsed(
+                                    hintText: 'Write a note'),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -309,16 +332,19 @@ class optionTile extends StatelessWidget {
   final IconData leading;
   final String text;
   final IconData trailing;
+  final VoidCallback func;
   const optionTile({
     Key? key,
     required this.leading,
     required this.text,
     required this.trailing,
+    required this.func,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () => func(),
       dense: true,
       visualDensity: VisualDensity(horizontal: -2, vertical: -2),
       leading: Icon(

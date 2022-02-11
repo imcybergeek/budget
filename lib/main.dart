@@ -1,13 +1,18 @@
 import 'package:budget/screens/sub_screens/popUp_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'custom/budget_controller.dart';
 import 'route_generator.dart';
 import 'screens/sub_screens/app_drawer.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -42,6 +47,49 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  void _create() async {
+    try {
+      await firestore.collection("users").doc("testUser").set({
+        'firstName': 'test',
+        'lastName': 'user',
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void _read() async {
+    DocumentSnapshot documentSnapshot;
+    try {
+      documentSnapshot =
+          await firestore.collection('users').doc('testUser').get();
+      print(documentSnapshot.data());
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void _update() async {
+    try {
+      firestore
+          .collection('users')
+          .doc('testUser')
+          .update({'firstName': 'testUpdated'});
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void _delete() async {
+    try {
+      firestore.collection('users').doc('testUser').delete();
+    } catch (e) {
+      print(e);
+    }
+  }
+
   int offset = 250;
   double opacity = 0;
   final _controller = ScrollController();
@@ -66,221 +114,261 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).colorScheme.primary,
-      child: SafeArea(
-        child: Scaffold(
-          drawer: SizedBox(
-            width: 250,
-            child: Drawer(
-              child: AppDrawer(),
-            ),
-          ),
-          backgroundColor: Colors.grey[200],
-          body: Stack(
-            children: [
-              SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                controller: _controller,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    MonthlyInfo(),
-                    BudgetInfo(),
-                    DailyIO(
-                      "Jan 28, 2022",
-                      "-160",
-                      "+10,000",
-                    ),
-                    IO(
-                      FontAwesomeIcons.wallet,
-                      Colors.red,
-                      "Salary",
-                      "salary",
-                      "+10,000",
-                      income: true,
-                    ),
-                    IO(
-                      FontAwesomeIcons.utensils,
-                      Colors.orange,
-                      "Food",
-                      "swiggy paneer",
-                      "-160",
-                    ),
-                    DailyIO(
-                      "Jan 24, 2022",
-                      "-510",
-                      "+10,000",
-                    ),
-                    IO(
-                      FontAwesomeIcons.youtube,
-                      Colors.green,
-                      "XD",
-                      "XD",
-                      "-10",
-                    ),
-                    IO(
-                      FontAwesomeIcons.wallet,
-                      Colors.red,
-                      "Salary",
-                      "",
-                      "+10,000",
-                      income: true,
-                    ),
-                    IO(
-                      FontAwesomeIcons.utensils,
-                      Colors.orange,
-                      "Food",
-                      "zomato",
-                      "-500",
-                    ),
-                    IO(
-                      FontAwesomeIcons.utensils,
-                      Colors.orange,
-                      "Food",
-                      "zomato",
-                      "-500",
-                    ),
-                    IO(
-                      FontAwesomeIcons.utensils,
-                      Colors.orange,
-                      "Food",
-                      "zomato",
-                      "-500",
-                    ),
-                    IO(
-                      FontAwesomeIcons.utensils,
-                      Colors.orange,
-                      "Food",
-                      "zomato",
-                      "-500",
-                    ),
-                    IO(
-                      FontAwesomeIcons.utensils,
-                      Colors.orange,
-                      "Food",
-                      "zomato",
-                      "-500",
-                    ),
-                    IO(
-                      FontAwesomeIcons.utensils,
-                      Colors.orange,
-                      "Food",
-                      "zomato",
-                      "-500",
-                    ),
-                    IO(
-                      FontAwesomeIcons.utensils,
-                      Colors.orange,
-                      "Food",
-                      "zomato",
-                      "-500",
-                    ),
-                    IO(
-                      FontAwesomeIcons.utensils,
-                      Colors.orange,
-                      "Food",
-                      "zomato",
-                      "-500",
-                    ),
-                    IO(
-                      FontAwesomeIcons.utensils,
-                      Colors.orange,
-                      "Food",
-                      "zomato",
-                      "-500",
-                    ),
-                    IO(
-                      FontAwesomeIcons.utensils,
-                      Colors.orange,
-                      "Food",
-                      "zomato",
-                      "-500",
-                    ),
-                    IO(
-                      FontAwesomeIcons.utensils,
-                      Colors.orange,
-                      "Food",
-                      "zomato",
-                      "-500",
-                    ),
-                    IO(
-                      FontAwesomeIcons.utensils,
-                      Colors.orange,
-                      "Food",
-                      "zomato",
-                      "-500",
-                    ),
-                    SizedBox(height: 15),
-                  ],
+    return GetBuilder<TodoController>(
+      init: TodoController(),
+      initState: (_) {},
+      builder: (todoController) {
+        todoController.getData();
+        return Container(
+          color: Theme.of(context).colorScheme.primary,
+          child: SafeArea(
+            child: Scaffold(
+              drawer: SizedBox(
+                width: 250,
+                child: Drawer(
+                  child: AppDrawer(),
                 ),
               ),
-              YearlyInfo(opacity: opacity),
-            ],
-          ),
-          bottomNavigationBar: opacity < 1
-              ? BottomAppBar(
-                  shape: CircularNotchedRectangle(),
-                  child: Row(
-                    children: [
-                      Builder(
-                        builder: (context) => CustomIcon(
-                          icon: FontAwesomeIcons.bars,
-                          size: 27,
-                          func: () => Scaffold.of(context).openDrawer(),
-                        ),
-                      ),
-                      CustomIcon(
-                        icon: Icons.dashboard_customize,
-                        func: () =>
-                            // Pushing a named route
-                            Navigator.of(context).pushNamed(
-                          '/fourth',
-                          arguments: 'Hello there from the first page!',
-                        ),
-                      ),
-                      CustomIcon(
-                        icon: Icons.pie_chart_rounded,
-                        func: () =>
-                            // Pushing a named route
-                            Navigator.of(context).pushNamed(
-                          '/fifth',
-                          arguments: 'Hello there from the first page!',
-                        ),
-                      ),
-                      // CustomIcon(
-                      //   icon: Icons.folder_special,
-                      //   // ),
-                    ],
-                  ),
-                )
-              : null,
-          floatingActionButton: opacity < 1
-              ? Padding(
-                  padding: EdgeInsets.only(bottom: 8.0),
-                  child: FloatingActionButton(
-                    child: Icon(
-                      Icons.add_rounded,
-                      size: 40,
-                    ),
-                    onPressed: () {
-                      // Pushing a named route
-                      Navigator.of(context).pushNamed('/second');
-                      Future.delayed(const Duration(milliseconds: 500), () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return PopUpScreen();
+              backgroundColor: Colors.grey[200],
+              body: Stack(
+                children: [
+                  todoController.isLoading
+                      ? SizedBox(
+                          child: CircularProgressIndicator(),
+                        )
+                      : ListView.builder(
+                          itemCount: todoController.taskList.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title:
+                                  Text(todoController.taskList[index].ioName),
+                            );
                           },
-                        );
-                      });
-                    },
+                        ),
+                  SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    controller: _controller,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        MonthlyInfo(),
+                        BudgetInfo(),
+                        ElevatedButton(
+                            onPressed: () async => await todoController.addTodo(
+                                "XD", "XD", "XD", "XD", "XD", "XD", "XD"),
+                            child: Text("Create")),
+                        // ElevatedButton(
+                        //     onPressed: () {
+                        //       _read();
+                        //     },
+                        //     child: Text("Read")),
+                        // ElevatedButton(
+                        //     onPressed: () {
+                        //       _update();
+                        //     },
+                        //     child: Text("Update")),
+                        // ElevatedButton(
+                        //     onPressed: () {
+                        //       _delete();
+                        //     },
+                        //     child: Text("Delete")),
+                        // DailyIO(
+                        //   "Jan 28, 2022",
+                        //   "-160",
+                        //   "+10,000",
+                        // ),
+                        // IO(
+                        //   FontAwesomeIcons.wallet,
+                        //   Colors.red,
+                        //   "Salary",
+                        //   "salary",
+                        //   "+10,000",
+                        //   income: true,
+                        // ),
+                        // IO(
+                        //   FontAwesomeIcons.utensils,
+                        //   Colors.orange,
+                        //   "Food",
+                        //   "swiggy paneer",
+                        //   "-160",
+                        // ),
+                        // DailyIO(
+                        //   "Jan 24, 2022",
+                        //   "-510",
+                        //   "+10,000",
+                        // ),
+                        // IO(
+                        //   FontAwesomeIcons.youtube,
+                        //   Colors.green,
+                        //   "XD",
+                        //   "XD",
+                        //   "-10",
+                        // ),
+                        // IO(
+                        //   FontAwesomeIcons.wallet,
+                        //   Colors.red,
+                        //   "Salary",
+                        //   "",
+                        //   "+10,000",
+                        //   income: true,
+                        // ),
+                        // IO(
+                        //   FontAwesomeIcons.utensils,
+                        //   Colors.orange,
+                        //   "Food",
+                        //   "zomato",
+                        //   "-500",
+                        // ),
+                        // IO(
+                        //   FontAwesomeIcons.utensils,
+                        //   Colors.orange,
+                        //   "Food",
+                        //   "zomato",
+                        //   "-500",
+                        // ),
+                        // IO(
+                        //   FontAwesomeIcons.utensils,
+                        //   Colors.orange,
+                        //   "Food",
+                        //   "zomato",
+                        //   "-500",
+                        // ),
+                        // IO(
+                        //   FontAwesomeIcons.utensils,
+                        //   Colors.orange,
+                        //   "Food",
+                        //   "zomato",
+                        //   "-500",
+                        // ),
+                        // IO(
+                        //   FontAwesomeIcons.utensils,
+                        //   Colors.orange,
+                        //   "Food",
+                        //   "zomato",
+                        //   "-500",
+                        // ),
+                        // IO(
+                        //   FontAwesomeIcons.utensils,
+                        //   Colors.orange,
+                        //   "Food",
+                        //   "zomato",
+                        //   "-500",
+                        // ),
+                        // IO(
+                        //   FontAwesomeIcons.utensils,
+                        //   Colors.orange,
+                        //   "Food",
+                        //   "zomato",
+                        //   "-500",
+                        // ),
+                        // IO(
+                        //   FontAwesomeIcons.utensils,
+                        //   Colors.orange,
+                        //   "Food",
+                        //   "zomato",
+                        //   "-500",
+                        // ),
+                        // IO(
+                        //   FontAwesomeIcons.utensils,
+                        //   Colors.orange,
+                        //   "Food",
+                        //   "zomato",
+                        //   "-500",
+                        // ),
+                        // IO(
+                        //   FontAwesomeIcons.utensils,
+                        //   Colors.orange,
+                        //   "Food",
+                        //   "zomato",
+                        //   "-500",
+                        // ),
+                        // IO(
+                        //   FontAwesomeIcons.utensils,
+                        //   Colors.orange,
+                        //   "Food",
+                        //   "zomato",
+                        //   "-500",
+                        // ),
+                        // IO(
+                        //   FontAwesomeIcons.utensils,
+                        //   Colors.orange,
+                        //   "Food",
+                        //   "zomato",
+                        //   "-500",
+                        // ),
+                        SizedBox(height: 15),
+                      ],
+                    ),
                   ),
-                )
-              : null,
-          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        ),
-      ),
+                  YearlyInfo(opacity: opacity),
+                ],
+              ),
+              bottomNavigationBar: opacity < 1
+                  ? BottomAppBar(
+                      shape: CircularNotchedRectangle(),
+                      child: Row(
+                        children: [
+                          Builder(
+                            builder: (context) => CustomIcon(
+                              icon: FontAwesomeIcons.bars,
+                              size: 27,
+                              func: () => Scaffold.of(context).openDrawer(),
+                            ),
+                          ),
+                          CustomIcon(
+                            icon: Icons.dashboard_customize,
+                            func: () =>
+                                // Pushing a named route
+                                Navigator.of(context).pushNamed(
+                              '/fourth',
+                              arguments: 'Hello there from the first page!',
+                            ),
+                          ),
+                          CustomIcon(
+                            icon: Icons.pie_chart_rounded,
+                            func: () =>
+                                // Pushing a named route
+                                Navigator.of(context).pushNamed(
+                              '/fifth',
+                              arguments: 'Hello there from the first page!',
+                            ),
+                          ),
+                          // CustomIcon(
+                          //   icon: Icons.folder_special,
+                          //   // ),
+                        ],
+                      ),
+                    )
+                  : null,
+              floatingActionButton: opacity < 1
+                  ? Padding(
+                      padding: EdgeInsets.only(bottom: 8.0),
+                      child: FloatingActionButton(
+                        child: Icon(
+                          Icons.add_rounded,
+                          size: 40,
+                        ),
+                        onPressed: () {
+                          // Pushing a named route
+                          Navigator.of(context).pushNamed('/second');
+                          Future.delayed(const Duration(milliseconds: 500), () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return PopUpScreen();
+                              },
+                            );
+                          });
+                        },
+                      ),
+                    )
+                  : null,
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.endDocked,
+            ),
+          ),
+        );
+      },
     );
   }
 }

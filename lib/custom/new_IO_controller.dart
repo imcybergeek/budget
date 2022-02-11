@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:math_expressions/math_expressions.dart';
 
@@ -7,7 +8,14 @@ List exprList = ["/", "*", "-", "+", "."];
 class NewIOController extends GetxController {
   RxString number = ("0=").obs;
   RxBool changed = (false).obs;
+  RxString type = ("Income").obs;
+  RxInt key = (1).obs;
   RxString computed = ("0").obs;
+  RxString date = ("Today").obs;
+  RxString text = ("").obs;
+  RxString time =
+      ("${TimeOfDay.now().hour}:${TimeOfDay.now().minute < 10 ? "0" + "${TimeOfDay.now().minute}" : TimeOfDay.now().minute} ${TimeOfDay.now().hour < 12 ? "AM" : "PM"}")
+          .obs;
 
   numeric(String num) {
     if (no.length == 10) {

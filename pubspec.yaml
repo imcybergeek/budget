@@ -28,9 +28,14 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
+  cloud_firestore:
+  firebase_auth:
+  firebase_core:
   flutter:
     sdk: flutter
+  google_sign_in:
   font_awesome_flutter:
+  intl:
   get:
   math_expressions:
   percent_indicator:

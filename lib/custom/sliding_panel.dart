@@ -13,6 +13,7 @@ import 'dart:math';
 import 'package:flutter/physics.dart';
 
 import 'new_IO_controller.dart';
+import 'budget_controller.dart';
 import 'package:get/get.dart';
 
 enum SlideDirection {
@@ -315,6 +316,7 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                   animation: _ac,
                   builder: (context, child) {
                     final NewIOController controller = Get.find();
+                    final TodoController todoController = Get.find();
                     return Container(
                       height:
                           _ac.value * (widget.maxHeight - widget.minHeight) +
@@ -359,10 +361,18 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                             right: 16,
                             child: Obx(
                               () => FloatingActionButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   if (_ac.value == 1) {
                                     if (controller.changed.value) {
                                       controller.compute();
+                                      await todoController.addTodo(
+                                          controller.computed.value,
+                                          controller.date.value,
+                                          controller.time.value,
+                                          controller.text.value,
+                                          "XD",
+                                          "XD",
+                                          "XD");
                                     } else {
                                       _ac.value = 0;
                                     }
@@ -374,10 +384,18 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                                   icon: Icon(controller.changed.value
                                       ? Icons.check
                                       : Icons.calculate_outlined),
-                                  onPressed: () {
+                                  onPressed: () async {
                                     if (_ac.value == 1) {
                                       if (controller.changed.value) {
                                         controller.compute();
+                                        await todoController.addTodo(
+                                            controller.computed.value,
+                                            controller.date.value,
+                                            controller.time.value,
+                                            controller.text.value,
+                                            "XD",
+                                            "XD",
+                                            "XD");
                                       } else {
                                         _ac.value = 0;
                                       }
