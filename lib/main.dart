@@ -116,6 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final NewIOController controller = Get.put(NewIOController());
     return GetBuilder<BudgetController>(
       init: BudgetController(),
       initState: (_) {},
@@ -162,6 +163,31 @@ class _MyHomePageState extends State<MyHomePage> {
                                           ? expense
                                           : income;
                                   return IO(
+                                    () {
+                                      budgetController.type.value =
+                                          budgetController.budget[index].type;
+                                      budgetController.date.value =
+                                          budgetController.budget[index].date;
+                                      budgetController.time.value =
+                                          budgetController.budget[index].time;
+
+                                      budgetController.list.value = type;
+                                      budgetController.key.value = key;
+                                      budgetController
+                                          .computed.value = budgetController
+                                              .budget[index].type
+                                          ? "+${budgetController.budget[index].computed}"
+                                          : "-${budgetController.budget[index].computed}";
+
+                                      budgetController.category.value =
+                                          budgetController.budget[index].type
+                                              ? "Expenses"
+                                              : "Income";
+                                      budgetController.dateTime.value =
+                                          "${budgetController.budget[index].date}, ${budgetController.budget[index].time}";
+                                      budgetController.remark.value =
+                                          budgetController.budget[index].text;
+                                    },
                                     type[key - 1].icon,
                                     type[key - 1].color,
                                     type[key - 1].text,
@@ -225,6 +251,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         onPressed: () {
                           // Pushing a named route
+                          controller.clear();
                           Navigator.of(context).pushNamed('/second');
                           Future.delayed(const Duration(milliseconds: 500), () {
                             showModalBottomSheet(
@@ -554,9 +581,11 @@ class IO extends StatelessWidget {
   final String ioName;
   final String ioDesc;
   final String ioAmt;
+  final VoidCallback func;
   bool type;
 
   IO(
+    this.func,
     this.icon,
     this.color,
     this.ioName,
@@ -580,6 +609,7 @@ class IO extends StatelessWidget {
         ),
         child: ListTile(
           onTap: () {
+            func();
             // Pushing a named route
             Navigator.of(context).pushNamed(
               '/third',

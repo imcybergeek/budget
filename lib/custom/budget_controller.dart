@@ -1,3 +1,4 @@
+import 'new_IO_controller.dart';
 import 'package:budget/screens/budget_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -5,6 +6,15 @@ import 'package:get/get.dart';
 class BudgetController extends GetxController {
   var isLoading = false;
   var budget = <BudgetModel>[];
+  RxList list = [].obs;
+  RxInt key = (1).obs;
+  RxString computed = ("").obs;
+  RxString category = ("").obs;
+  RxString dateTime = ("").obs;
+  RxString remark = ("").obs;
+  RxBool type = (true).obs;
+  RxString date = ("").obs;
+  RxString time = ("").obs;
 
   Future<void> addTransaction(bool type, int key, String date, String time,
       String text, String computed) async {
@@ -48,5 +58,15 @@ class BudgetController extends GetxController {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  edit() {
+    final NewIOController controller = Get.put(NewIOController());
+    controller.type.value = type.value;
+    controller.key.value = key.value;
+    controller.computed.value = computed.value;
+    controller.date.value = date.value;
+    controller.text.value = remark.value;
+    controller.time.value = time.value;
   }
 }

@@ -1,7 +1,10 @@
+import 'package:budget/custom/budget_controller.dart';
+import 'package:budget/screens/new_IO_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:budget/main.dart';
 import 'package:budget/screens/sub_screens/popUp_screen.dart';
+import 'package:get/get.dart';
 
 class EditIOScreen extends StatelessWidget {
   final String data;
@@ -20,6 +23,7 @@ class EditIOScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final BudgetController budgetController = Get.find();
     return Scaffold(
       appBar: AppBar(
         title: Text("Edit Details"),
@@ -34,94 +38,105 @@ class EditIOScreen extends StatelessWidget {
         ],
         elevation: 0,
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Card(
-              child: Column(
-                children: [
-                  ListTile(
-                    horizontalTitleGap: 20,
-                    leading: Container(
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return PopUpScreen();
-                            },
-                          );
-                        },
-                        child: Icon(
-                          FontAwesomeIcons.youtube,
-                          color: Colors.white,
-                          size: 20,
+      body: Obx(
+        () => Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Card(
+                child: Column(
+                  children: [
+                    ListTile(
+                      horizontalTitleGap: 20,
+                      leading: Container(
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                          color: budgetController
+                              .list[budgetController.key.value - 1].color,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return PopUpScreen();
+                              },
+                            );
+                          },
+                          child: Icon(
+                            budgetController
+                                .list[budgetController.key.value - 1].icon,
+                            color: Colors.white,
+                            size: 20,
+                          ),
                         ),
                       ),
+                      title: CustomText(
+                        text: budgetController
+                            .list[budgetController.key.value - 1].text,
+                        size: 18,
+                      ),
+                      trailing: CustomText(
+                        text: budgetController.computed.value,
+                        size: 16,
+                        weight: FontWeight.bold,
+                        color: budgetController.category.value == "Expenses"
+                            ? null
+                            : Colors.blue,
+                      ),
                     ),
-                    title: CustomText(
-                      text: "Travel",
-                      size: 18,
+                    Div(),
+                    optionTile(
+                      leading: Icons.dashboard,
+                      text: "Category",
+                      trailing: budgetController.category.value,
                     ),
-                    trailing: CustomText(
-                      text: "-60,000",
-                      size: 16,
-                      weight: FontWeight.bold,
+                    Div(),
+                    optionTile(
+                      leading: Icons.calendar_today,
+                      text: "Date",
+                      trailing: budgetController.dateTime.value,
                     ),
-                  ),
-                  Div(),
-                  optionTile(
-                    leading: Icons.dashboard,
-                    text: "Category",
-                    trailing: "Expenses",
-                  ),
-                  Div(),
-                  optionTile(
-                    leading: Icons.calendar_today,
-                    text: "Date",
-                    trailing: "01/31/2022, 13:42",
-                  ),
-                  Div(),
-                  optionTile(
-                    leading: Icons.note_alt_outlined,
-                    text: "Remark",
-                    trailing: "swiggy paneer",
-                  ),
-                ],
+                    Div(),
+                    optionTile(
+                      leading: Icons.note_alt_outlined,
+                      text: "Remark",
+                      trailing: budgetController.remark.value,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          ElevatedButton(
-            onPressed: () {},
-            child: SizedBox(
-              width: 50,
-              child: Row(
-                children: [
-                  Icon(
-                    FontAwesomeIcons.pen,
-                    size: 12,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  CustomText(
-                    text: "EDIT",
-                    size: 15,
-                    color: Colors.white,
-                    weight: FontWeight.w600,
-                  ),
-                ],
+            ElevatedButton(
+              onPressed: () {
+                budgetController.edit();
+                Get.to(NewIOScreen());
+              },
+              child: SizedBox(
+                width: 50,
+                child: Row(
+                  children: [
+                    Icon(
+                      FontAwesomeIcons.pen,
+                      size: 12,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    CustomText(
+                      text: "EDIT",
+                      size: 15,
+                      color: Colors.white,
+                      weight: FontWeight.w600,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

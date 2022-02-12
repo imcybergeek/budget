@@ -315,8 +315,9 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                 child: AnimatedBuilder(
                   animation: _ac,
                   builder: (context, child) {
+                    // controller
                     final NewIOController controller = Get.find();
-                    final BudgetController budgetController = Get.find();
+                    // ...
                     return Container(
                       height:
                           _ac.value * (widget.maxHeight - widget.minHeight) +
