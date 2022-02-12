@@ -68,6 +68,7 @@ class BudgetController extends GetxController {
     controller.date.value = date.value;
     controller.time.value = time.value;
     controller.text.value = remark.value;
-    controller.remark.value = remark.value;
+    controller.remark.value =
+        remark.value == "" ? "Write a note" : remark.value;
   }
 }
