@@ -1,4 +1,5 @@
 class BudgetModel {
+  String id;
   bool type;
   int key;
   String date;
@@ -6,6 +7,6 @@ class BudgetModel {
   String text;
   String computed;
 
-  BudgetModel(
-      this.type, this.key, this.date, this.time, this.text, this.computed);
+  BudgetModel(this.id, this.type, this.key, this.date, this.time, this.text,
+      this.computed);
 }

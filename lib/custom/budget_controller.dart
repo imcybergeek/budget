@@ -15,10 +15,14 @@ class BudgetController extends GetxController {
   RxBool type = (true).obs;
   RxString date = ("").obs;
   RxString time = ("").obs;
+  RxString id = ("").obs;
 
-  Future<void> addTransaction(bool type, int key, String date, String time,
-      String text, String computed) async {
-    await FirebaseFirestore.instance.collection('transactions').doc().set(
+  Future<void> addTransaction(String id, bool type, int key, String date,
+      String time, String text, String computed) async {
+    await FirebaseFirestore.instance
+        .collection('transactions')
+        .doc(id.isNotEmpty ? id : '')
+        .set(
       {
         'type': type,
         'key': key,
@@ -44,6 +48,7 @@ class BudgetController extends GetxController {
       for (var item in _taskSnap.docs) {
         budget.add(
           BudgetModel(
+            item.id,
             item['type'],
             item['key'],
             item['date'],
@@ -70,5 +75,6 @@ class BudgetController extends GetxController {
     controller.text.value = remark.value;
     controller.remark.value =
         remark.value == "" ? "Write a note" : remark.value;
+    controller.id.value = id.value;
   }
 }

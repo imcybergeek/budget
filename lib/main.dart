@@ -164,6 +164,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                           : income;
                                   return IO(
                                     () {
+                                      budgetController.id.value =
+                                          budgetController.budget[index].id;
                                       budgetController.type.value =
                                           budgetController.budget[index].type;
                                       budgetController.date.value =

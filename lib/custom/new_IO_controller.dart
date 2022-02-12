@@ -17,11 +17,16 @@ class NewIOController extends GetxController {
   RxString date = (DateFormat('MMM dd, yyyy').format(DateTime.now())).obs;
   RxString text = ("").obs;
   RxString remark = ("Write a note").obs;
+  RxString id = ("").obs;
   RxString time =
       ("${TimeOfDay.now().hour}:${TimeOfDay.now().minute < 10 ? "0" + "${TimeOfDay.now().minute}" : TimeOfDay.now().minute} ${TimeOfDay.now().hour < 12 ? "AM" : "PM"}")
           .obs;
 
   numeric(String num) {
+    if (number.value == "0=" && computed.value == "0") {
+      number.value = no = "";
+      computed.value == "";
+    }
     if (no.length == 15) {
       return null;
     }
@@ -67,8 +72,8 @@ class NewIOController extends GetxController {
         }
       } else {
         checkZero = true;
-        number.value = no = "";
-        computed.value = "";
+        number.value = no = "=0";
+        computed.value = "0";
         changed.value = false;
         return null;
       }
@@ -105,6 +110,7 @@ class NewIOController extends GetxController {
     if (changed.value) {
       compute();
       await budgetController.addTransaction(
+        id.value == "" ? "${DateTime.now().millisecondsSinceEpoch}" : id.value,
         type.value,
         key.value,
         date.value,
@@ -125,6 +131,8 @@ class NewIOController extends GetxController {
     computed = ("0").obs;
     date = (DateFormat('MMM dd, yyyy').format(DateTime.now())).obs;
     text = ("").obs;
+    remark = ("Write a note").obs;
+    id = ("").obs;
     time =
         ("${TimeOfDay.now().hour}:${TimeOfDay.now().minute < 10 ? "0" + "${TimeOfDay.now().minute}" : TimeOfDay.now().minute} ${TimeOfDay.now().hour < 12 ? "AM" : "PM"}")
             .obs;

@@ -1,5 +1,6 @@
 import 'package:budget/custom/budget_controller.dart';
 import 'package:budget/screens/new_IO_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:budget/main.dart';
@@ -24,22 +25,28 @@ class EditIOScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final BudgetController budgetController = Get.find();
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Edit Details"),
-        actions: [
-          Icon(
-            FontAwesomeIcons.solidTrashAlt,
-            size: 20,
-          ),
-          SizedBox(
-            width: 20,
-          ),
-        ],
-        elevation: 0,
-      ),
-      body: Obx(
-        () => Column(
+    return Obx(
+      () => Scaffold(
+        appBar: AppBar(
+          title: Text("Edit Details"),
+          actions: [
+            IconButton(
+              onPressed: () => {
+                FirebaseFirestore.instance
+                    .collection('transactions')
+                    .doc(budgetController.id.value)
+                    .delete(),
+                Navigator.pop(context)
+              },
+              icon: Icon(
+                FontAwesomeIcons.solidTrashAlt,
+                size: 20,
+              ),
+            ),
+          ],
+          elevation: 0,
+        ),
+        body: Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(10),

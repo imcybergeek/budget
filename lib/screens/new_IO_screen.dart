@@ -315,11 +315,17 @@ class _CalcBtnState extends State<CalcBtn> {
                     controller.numeric(widget.no);
                   }
                 },
-                child: CustomText(
-                  text: widget.no,
-                  size: 25,
-                  color: widget.color ? Colors.white : Colors.black,
-                ),
+                child: widget.no == "C"
+                    ? Icon(
+                        Icons.cancel_presentation_rounded,
+                        color: Colors.white,
+                        size: 30,
+                      )
+                    : CustomText(
+                        text: widget.no,
+                        size: 25,
+                        color: widget.color ? Colors.white : Colors.black,
+                      ),
               );
             },
           ),
