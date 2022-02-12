@@ -1,3 +1,5 @@
+import 'package:budget/custom/new_IO_controller.dart';
+import 'package:budget/screens/io.dart';
 import 'package:budget/screens/sub_screens/popUp_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -114,11 +116,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<TodoController>(
-      init: TodoController(),
+    return GetBuilder<BudgetController>(
+      init: BudgetController(),
       initState: (_) {},
-      builder: (todoController) {
-        todoController.getData();
+      builder: (budgetController) {
+        budgetController.getData();
         return Container(
           color: Theme.of(context).colorScheme.primary,
           child: SafeArea(
@@ -132,19 +134,6 @@ class _MyHomePageState extends State<MyHomePage> {
               backgroundColor: Colors.grey[200],
               body: Stack(
                 children: [
-                  todoController.isLoading
-                      ? SizedBox(
-                          child: CircularProgressIndicator(),
-                        )
-                      : ListView.builder(
-                          itemCount: todoController.taskList.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title:
-                                  Text(todoController.taskList[index].ioName),
-                            );
-                          },
-                        ),
                   SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
                     controller: _controller,
@@ -153,149 +142,35 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         MonthlyInfo(),
                         BudgetInfo(),
-                        ElevatedButton(
-                            onPressed: () async => await todoController.addTodo(
-                                "XD", "XD", "XD", "XD", "XD", "XD", "XD"),
-                            child: Text("Create")),
-                        // ElevatedButton(
-                        //     onPressed: () {
-                        //       _read();
-                        //     },
-                        //     child: Text("Read")),
-                        // ElevatedButton(
-                        //     onPressed: () {
-                        //       _update();
-                        //     },
-                        //     child: Text("Update")),
-                        // ElevatedButton(
-                        //     onPressed: () {
-                        //       _delete();
-                        //     },
-                        //     child: Text("Delete")),
-                        // DailyIO(
-                        //   "Jan 28, 2022",
-                        //   "-160",
-                        //   "+10,000",
-                        // ),
-                        // IO(
-                        //   FontAwesomeIcons.wallet,
-                        //   Colors.red,
-                        //   "Salary",
-                        //   "salary",
-                        //   "+10,000",
-                        //   income: true,
-                        // ),
-                        // IO(
-                        //   FontAwesomeIcons.utensils,
-                        //   Colors.orange,
-                        //   "Food",
-                        //   "swiggy paneer",
-                        //   "-160",
-                        // ),
-                        // DailyIO(
-                        //   "Jan 24, 2022",
-                        //   "-510",
-                        //   "+10,000",
-                        // ),
-                        // IO(
-                        //   FontAwesomeIcons.youtube,
-                        //   Colors.green,
-                        //   "XD",
-                        //   "XD",
-                        //   "-10",
-                        // ),
-                        // IO(
-                        //   FontAwesomeIcons.wallet,
-                        //   Colors.red,
-                        //   "Salary",
-                        //   "",
-                        //   "+10,000",
-                        //   income: true,
-                        // ),
-                        // IO(
-                        //   FontAwesomeIcons.utensils,
-                        //   Colors.orange,
-                        //   "Food",
-                        //   "zomato",
-                        //   "-500",
-                        // ),
-                        // IO(
-                        //   FontAwesomeIcons.utensils,
-                        //   Colors.orange,
-                        //   "Food",
-                        //   "zomato",
-                        //   "-500",
-                        // ),
-                        // IO(
-                        //   FontAwesomeIcons.utensils,
-                        //   Colors.orange,
-                        //   "Food",
-                        //   "zomato",
-                        //   "-500",
-                        // ),
-                        // IO(
-                        //   FontAwesomeIcons.utensils,
-                        //   Colors.orange,
-                        //   "Food",
-                        //   "zomato",
-                        //   "-500",
-                        // ),
-                        // IO(
-                        //   FontAwesomeIcons.utensils,
-                        //   Colors.orange,
-                        //   "Food",
-                        //   "zomato",
-                        //   "-500",
-                        // ),
-                        // IO(
-                        //   FontAwesomeIcons.utensils,
-                        //   Colors.orange,
-                        //   "Food",
-                        //   "zomato",
-                        //   "-500",
-                        // ),
-                        // IO(
-                        //   FontAwesomeIcons.utensils,
-                        //   Colors.orange,
-                        //   "Food",
-                        //   "zomato",
-                        //   "-500",
-                        // ),
-                        // IO(
-                        //   FontAwesomeIcons.utensils,
-                        //   Colors.orange,
-                        //   "Food",
-                        //   "zomato",
-                        //   "-500",
-                        // ),
-                        // IO(
-                        //   FontAwesomeIcons.utensils,
-                        //   Colors.orange,
-                        //   "Food",
-                        //   "zomato",
-                        //   "-500",
-                        // ),
-                        // IO(
-                        //   FontAwesomeIcons.utensils,
-                        //   Colors.orange,
-                        //   "Food",
-                        //   "zomato",
-                        //   "-500",
-                        // ),
-                        // IO(
-                        //   FontAwesomeIcons.utensils,
-                        //   Colors.orange,
-                        //   "Food",
-                        //   "zomato",
-                        //   "-500",
-                        // ),
-                        // IO(
-                        //   FontAwesomeIcons.utensils,
-                        //   Colors.orange,
-                        //   "Food",
-                        //   "zomato",
-                        //   "-500",
-                        // ),
+                        DailyIO(
+                          "Feb 12, 2022",
+                          "-160",
+                          "+10,000",
+                        ),
+                        budgetController.isLoading
+                            ? SizedBox(
+                                child: CircularProgressIndicator(),
+                              )
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                physics: ClampingScrollPhysics(),
+                                itemCount: budgetController.budget.length,
+                                itemBuilder: (context, index) {
+                                  int key = budgetController.budget[index].key;
+                                  List type =
+                                      budgetController.budget[index].type
+                                          ? expense
+                                          : income;
+                                  return IO(
+                                    type[key - 1].icon,
+                                    type[key - 1].color,
+                                    type[key - 1].text,
+                                    budgetController.budget[index].text,
+                                    budgetController.budget[index].computed,
+                                    type: budgetController.budget[index].type,
+                                  );
+                                },
+                              ),
                         SizedBox(height: 15),
                       ],
                     ),
@@ -636,12 +511,12 @@ class YearlyInfo extends StatelessWidget {
 class DailyIO extends StatelessWidget {
   final String date;
   final String expense;
-  final String income;
+  final String type;
 
   DailyIO(
     this.date,
     this.expense,
-    this.income, {
+    this.type, {
     Key? key,
   }) : super(key: key);
 
@@ -679,7 +554,7 @@ class IO extends StatelessWidget {
   final String ioName;
   final String ioDesc;
   final String ioAmt;
-  bool income;
+  bool type;
 
   IO(
     this.icon,
@@ -688,7 +563,7 @@ class IO extends StatelessWidget {
     this.ioDesc,
     this.ioAmt, {
     Key? key,
-    this.income = false,
+    this.type = false,
   }) : super(key: key);
 
   @override
@@ -736,10 +611,10 @@ class IO extends StatelessWidget {
             size: 8,
           ),
           trailing: CustomText(
-            text: ioAmt,
+            text: type ? "-$ioAmt" : "+$ioAmt",
             size: 15,
             weight: FontWeight.bold,
-            color: income ? Colors.blue : null,
+            color: type ? null : Colors.blue,
           ),
         ),
       ),

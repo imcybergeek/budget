@@ -1,5 +1,7 @@
+import 'package:budget/custom/budget_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 String no = "";
@@ -12,7 +14,7 @@ class NewIOController extends GetxController {
   RxBool type = (true).obs;
   RxInt key = (1).obs;
   RxString computed = ("0").obs;
-  RxString date = ("Today").obs;
+  RxString date = (DateFormat('MMM dd, yyyy').format(DateTime.now())).obs;
   RxString text = ("").obs;
   RxString time =
       ("${TimeOfDay.now().hour}:${TimeOfDay.now().minute < 10 ? "0" + "${TimeOfDay.now().minute}" : TimeOfDay.now().minute} ${TimeOfDay.now().hour < 12 ? "AM" : "PM"}")
@@ -95,5 +97,35 @@ class NewIOController extends GetxController {
       }
     }
     computed.value = eval;
+  }
+
+  done() async {
+    final BudgetController budgetController = Get.find();
+    if (changed.value) {
+      compute();
+      await budgetController.addTransaction(
+        type.value,
+        key.value,
+        date.value,
+        time.value,
+        text.value,
+        computed.value,
+      );
+    }
+  }
+
+  clear() {
+    no = "";
+    number = ("0=").obs;
+    checkZero = true;
+    changed = (false).obs;
+    type = (true).obs;
+    key = (1).obs;
+    computed = ("0").obs;
+    date = (DateFormat('MMM dd, yyyy').format(DateTime.now())).obs;
+    text = ("").obs;
+    time =
+        ("${TimeOfDay.now().hour}:${TimeOfDay.now().minute < 10 ? "0" + "${TimeOfDay.now().minute}" : TimeOfDay.now().minute} ${TimeOfDay.now().hour < 12 ? "AM" : "PM"}")
+            .obs;
   }
 }

@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:flutter/physics.dart';
-import 'package:intl/intl.dart';
 
 import 'new_IO_controller.dart';
 import 'budget_controller.dart';
@@ -317,7 +316,7 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                   animation: _ac,
                   builder: (context, child) {
                     final NewIOController controller = Get.find();
-                    final TodoController todoController = Get.find();
+                    final BudgetController budgetController = Get.find();
                     return Container(
                       height:
                           _ac.value * (widget.maxHeight - widget.minHeight) +
@@ -343,7 +342,7 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                               height: 50,
                               width: double.infinity,
                               child: MaterialButton(
-                                splashColor: Colors.blue,
+                                splashColor: Colors.white,
                                 onPressed: () {
                                   _ac.value == 1
                                       ? _ac.value = 0
@@ -365,15 +364,8 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                                 onPressed: () async {
                                   if (_ac.value == 1) {
                                     if (controller.changed.value) {
-                                      controller.compute();
-                                      await todoController.addTodo(
-                                          controller.computed.value,
-                                          controller.date.value,
-                                          controller.time.value,
-                                          controller.text.value,
-                                          "XD",
-                                          "XD",
-                                          "XD");
+                                      controller.done();
+                                      controller.clear();
                                     } else {
                                       _ac.value = 0;
                                     }
@@ -388,19 +380,8 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                                   onPressed: () async {
                                     if (_ac.value == 1) {
                                       if (controller.changed.value) {
-                                        controller.compute();
-                                        await todoController.addTodo(
-                                            controller.computed.value,
-                                            controller.date.value == "Today"
-                                                ? DateFormat('MMM dd, yyyy')
-                                                    .format(DateTime.now())
-                                                : controller.date.value,
-                                            controller.time.value,
-                                            controller.text.value,
-                                            "XD",
-                                            "XD",
-                                            "XD");
-                                        controller.changed.value = false;
+                                        controller.done();
+                                        controller.clear();
                                       } else {
                                         _ac.value = 0;
                                       }

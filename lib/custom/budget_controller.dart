@@ -2,21 +2,20 @@ import 'package:budget/screens/budget_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
-class TodoController extends GetxController {
+class BudgetController extends GetxController {
   var isLoading = false;
-  var taskList = <BudgetModel>[];
+  var budget = <BudgetModel>[];
 
-  Future<void> addTodo(String id, String income, String key, String ioName,
-      String ioDesc, String ioAmt, String date) async {
-    await FirebaseFirestore.instance.collection('todos').doc().set(
+  Future<void> addTransaction(bool type, int key, String date, String time,
+      String text, String computed) async {
+    await FirebaseFirestore.instance.collection('transactions').doc().set(
       {
-        'id': id,
-        'income': income,
+        'type': type,
         'key': key,
-        'ioName': ioName,
-        'ioDesc': ioDesc,
-        'ioAmt': ioAmt,
         'date': date,
+        'time': time,
+        'text': text,
+        'computed': computed,
       },
       SetOptions(merge: true),
     ).then(
@@ -27,21 +26,20 @@ class TodoController extends GetxController {
   Future<void> getData() async {
     try {
       QuerySnapshot _taskSnap = await FirebaseFirestore.instance
-          .collection('todos')
-          .orderBy('task')
+          .collection('transactions')
+          .orderBy('date')
           .get();
 
-      taskList.clear();
+      budget.clear();
       for (var item in _taskSnap.docs) {
-        taskList.add(
+        budget.add(
           BudgetModel(
-            item['id'],
-            item['income'],
+            item['type'],
             item['key'],
-            item['ioName'],
-            item['ioDesc'],
-            item['ioAmt'],
             item['date'],
+            item['time'],
+            item['text'],
+            item['computed'],
           ),
         );
       }

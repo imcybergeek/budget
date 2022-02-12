@@ -1,14 +1,11 @@
-import 'package:get/get_state_manager/src/simple/list_notifier.dart';
-
 class BudgetModel {
-  String id;
-  String income;
-  String key;
-  String ioName;
-  String ioDesc;
-  String ioAmt;
+  bool type;
+  int key;
   String date;
+  String time;
+  String text;
+  String computed;
 
-  BudgetModel(this.id, this.income, this.key, this.ioName, this.ioDesc,
-      this.ioAmt, this.date);
+  BudgetModel(
+      this.type, this.key, this.date, this.time, this.text, this.computed);
 }

@@ -18,9 +18,8 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const NewIOScreen(),
         );
-        // If args is not of the correct type, return an error page.
-        // You can also throw an exception while in development.
-        return _errorRoute();
+      // If args is not of the correct type, return an error page.
+      // You can also throw an exception while in development.
 
       case '/third':
         // Validation of correct data type
