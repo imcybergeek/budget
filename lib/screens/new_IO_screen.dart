@@ -1,4 +1,5 @@
 import 'package:budget/custom/new_IO_controller.dart';
+import 'package:budget/screens/io.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:budget/main.dart';
@@ -14,181 +15,181 @@ class NewIOScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NewIOController controller = Get.put(NewIOController());
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        toolbarHeight: 100,
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(25),
-          child: Stack(
-            children: [
-              Container(
-                height: 65,
-                color: Theme.of(context).colorScheme.primary,
-                width: double.infinity,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 10),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: GestureDetector(
-                              onTap: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return PopUpScreen();
-                                  },
-                                );
-                              },
-                              child: Icon(
-                                FontAwesomeIcons.youtube,
-                                color: Colors.white,
-                                size: 35,
+    return Obx(
+      () => Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          toolbarHeight: 100,
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(25),
+            child: Stack(
+              children: [
+                Container(
+                  height: 65,
+                  color: Theme.of(context).colorScheme.primary,
+                  width: double.infinity,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 10),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                color: controller.type.value
+                                    ? expense[controller.key.value - 1].color
+                                    : income[controller.key.value - 1].color,
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: GestureDetector(
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return PopUpScreen();
+                                    },
+                                  );
+                                },
+                                child: Icon(
+                                  controller.type.value
+                                      ? expense[controller.key.value - 1].icon
+                                      : income[controller.key.value - 1].icon,
+                                  color: Colors.white,
+                                  size: 35,
+                                ),
                               ),
                             ),
-                          ),
-                          Spacer(),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Row(
-                                children: [
-                                  Obx(
-                                    () => CustomText(
+                            Spacer(),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Row(
+                                  children: [
+                                    CustomText(
                                       text: controller.computed.value,
                                       size: 30,
                                       color: Colors.white,
                                     ),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_drop_down,
-                                    size: 30,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 5),
-                                child: Obx(
-                                  () => CustomText(
+                                    Icon(
+                                      Icons.arrow_drop_down,
+                                      size: 30,
+                                      color: Colors.white,
+                                    )
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 5),
+                                  child: CustomText(
                                     text: controller.number.value,
                                     size: 15,
                                     color: Colors.white,
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        elevation: 0,
-      ),
-      body: SlidingUpPanel(
-        defaultPanelState: PanelState.OPEN,
-        renderPanelSheet: false,
-        boxShadow: [BoxShadow(blurRadius: 0, color: Colors.transparent)],
-        maxHeight: 350,
-        minHeight: 100,
-        panel: Padding(
-          padding: const EdgeInsets.only(top: 50),
-          child: Container(
-            color: Colors.white,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 55,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 5),
-                  child: Row(
-                    children: [
-                      CalcBtn("7"),
-                      CalcBtn("8"),
-                      CalcBtn("9"),
-                      CalcBtn(
-                        "÷",
-                        right: 5,
-                        color: true,
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 5),
-                  child: Row(
-                    children: [
-                      CalcBtn("4"),
-                      CalcBtn("5"),
-                      CalcBtn("6"),
-                      CalcBtn(
-                        "x",
-                        right: 5,
-                        color: true,
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 5),
-                  child: Row(
-                    children: [
-                      CalcBtn("1"),
-                      CalcBtn("2"),
-                      CalcBtn("3"),
-                      CalcBtn(
-                        "-",
-                        right: 5,
-                        color: true,
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 5),
-                  child: Row(
-                    children: [
-                      CalcBtn("."),
-                      CalcBtn("0"),
-                      CalcBtn(
-                        "C",
-                        color: true,
-                      ),
-                      CalcBtn(
-                        "+",
-                        right: 5,
-                        color: true,
-                      ),
-                    ],
+                              ],
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
           ),
+          elevation: 0,
         ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(5),
-              child: Obx(
-                () => Card(
+        body: SlidingUpPanel(
+          defaultPanelState: PanelState.OPEN,
+          renderPanelSheet: false,
+          boxShadow: [BoxShadow(blurRadius: 0, color: Colors.transparent)],
+          maxHeight: 350,
+          minHeight: 100,
+          panel: Padding(
+            padding: const EdgeInsets.only(top: 50),
+            child: Container(
+              color: Colors.white,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 55,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: Row(
+                      children: [
+                        CalcBtn("7"),
+                        CalcBtn("8"),
+                        CalcBtn("9"),
+                        CalcBtn(
+                          "÷",
+                          right: 5,
+                          color: true,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: Row(
+                      children: [
+                        CalcBtn("4"),
+                        CalcBtn("5"),
+                        CalcBtn("6"),
+                        CalcBtn(
+                          "x",
+                          right: 5,
+                          color: true,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: Row(
+                      children: [
+                        CalcBtn("1"),
+                        CalcBtn("2"),
+                        CalcBtn("3"),
+                        CalcBtn(
+                          "-",
+                          right: 5,
+                          color: true,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: Row(
+                      children: [
+                        CalcBtn("."),
+                        CalcBtn("0"),
+                        CalcBtn(
+                          "C",
+                          color: true,
+                        ),
+                        CalcBtn(
+                          "+",
+                          right: 5,
+                          color: true,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(5),
+                child: Card(
                   child: Column(
                     children: [
                       optionTile(
@@ -258,8 +259,8 @@ class NewIOScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

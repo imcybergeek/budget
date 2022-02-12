@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:flutter/physics.dart';
+import 'package:intl/intl.dart';
 
 import 'new_IO_controller.dart';
 import 'budget_controller.dart';
@@ -390,12 +391,16 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                                         controller.compute();
                                         await todoController.addTodo(
                                             controller.computed.value,
-                                            controller.date.value,
+                                            controller.date.value == "Today"
+                                                ? DateFormat('MMM dd, yyyy')
+                                                    .format(DateTime.now())
+                                                : controller.date.value,
                                             controller.time.value,
                                             controller.text.value,
                                             "XD",
                                             "XD",
                                             "XD");
+                                        controller.changed.value = false;
                                       } else {
                                         _ac.value = 0;
                                       }

@@ -7,8 +7,9 @@ List exprList = ["/", "*", "-", "+", "."];
 
 class NewIOController extends GetxController {
   RxString number = ("0=").obs;
+  bool checkZero = true;
   RxBool changed = (false).obs;
-  RxString type = ("Income").obs;
+  RxBool type = (true).obs;
   RxInt key = (1).obs;
   RxString computed = ("0").obs;
   RxString date = ("Today").obs;
@@ -18,21 +19,32 @@ class NewIOController extends GetxController {
           .obs;
 
   numeric(String num) {
-    if (no.length == 10) {
+    if (no.length == 15) {
       return null;
     }
+    if (checkZero && num == "0") {
+      return null;
+    } else {
+      checkZero = false;
+    }
     number.value = no = no + num;
-    changed.value = true;
+    compute();
+    if (double.parse(computed.value) / 1 != 0) {
+      changed.value = true;
+    } else {
+      changed.value = false;
+    }
   }
 
   expression(String expr) {
-    if (no == "" || no.length == 9) {
+    checkZero = true;
+    if (no == "" || no.length == 14) {
       return null;
     }
     String lastNo = no.substring(no.length - 1, no.length);
     for (final i in exprList) {
       if (lastNo == i) {
-        return null;
+        removeLast();
       }
     }
     number.value = no = no + expr;
@@ -42,6 +54,27 @@ class NewIOController extends GetxController {
   removeLast() {
     if (no != "" && no.isNotEmpty) {
       number.value = no = no.substring(0, no.length - 1);
+      if (no.isNotEmpty) {
+        String lastNo = no.substring(no.length - 1, no.length);
+        for (final i in exprList) {
+          if (lastNo == i || lastNo == "0") {
+            checkZero = true;
+            return null;
+          }
+        }
+      } else {
+        checkZero = true;
+        number.value = no = "";
+        computed.value = "";
+        changed.value = false;
+        return null;
+      }
+      compute();
+      if (double.parse(computed.value) / 1 != 0) {
+        changed.value = true;
+      } else {
+        changed.value = false;
+      }
     } else {
       changed.value = false;
     }
@@ -62,7 +95,5 @@ class NewIOController extends GetxController {
       }
     }
     computed.value = eval;
-    number.value = no = "";
-    changed.value = false;
   }
 }

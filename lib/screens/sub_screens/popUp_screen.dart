@@ -49,8 +49,8 @@ class PopUpScreen extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            PopUpList(expense),
-            PopUpList(income),
+            PopUpList(expense, true),
+            PopUpList(income, false),
           ],
         ),
       ),
@@ -64,6 +64,7 @@ class PopUpTile extends StatelessWidget {
   final String text;
   final bool visible;
   final VoidCallback func;
+
   const PopUpTile({
     Key? key,
     required this.icon,
@@ -108,7 +109,12 @@ class PopUpTile extends StatelessWidget {
 
 class PopUpList extends StatelessWidget {
   final List type;
-  const PopUpList(this.type, {Key? key}) : super(key: key);
+  final bool io;
+  const PopUpList(
+    this.type,
+    this.io, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -120,11 +126,16 @@ class PopUpList extends StatelessWidget {
         final item = type[index];
         return Obx(
           () => PopUpTile(
-            func: () => controller.key.value = item.key,
+            func: () => {
+              controller.key.value = item.key,
+              controller.type.value == io ? null : controller.type.value = io,
+              Navigator.pop(context)
+            },
             icon: item.icon!,
             color: item.color!,
             text: item.text!,
-            visible: item.key == controller.key.value,
+            visible:
+                controller.type.value == io && item.key == controller.key.value,
           ),
         );
       },
