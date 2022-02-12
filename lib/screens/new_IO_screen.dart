@@ -249,7 +249,7 @@ class NewIOScreen extends StatelessWidget {
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                                 decoration: new InputDecoration.collapsed(
-                                    hintText: 'Write a note'),
+                                    hintText: controller.remark.value),
                               ),
                             ),
                           ),

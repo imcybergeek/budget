@@ -16,6 +16,7 @@ class NewIOController extends GetxController {
   RxString computed = ("0").obs;
   RxString date = (DateFormat('MMM dd, yyyy').format(DateTime.now())).obs;
   RxString text = ("").obs;
+  RxString remark = ("Write a note").obs;
   RxString time =
       ("${TimeOfDay.now().hour}:${TimeOfDay.now().minute < 10 ? "0" + "${TimeOfDay.now().minute}" : TimeOfDay.now().minute} ${TimeOfDay.now().hour < 12 ? "AM" : "PM"}")
           .obs;

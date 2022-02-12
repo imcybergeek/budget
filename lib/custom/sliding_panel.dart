@@ -364,12 +364,6 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                               () => FloatingActionButton(
                                 onPressed: () async {
                                   if (_ac.value == 1) {
-                                    if (controller.changed.value) {
-                                      controller.done();
-                                      controller.clear();
-                                    } else {
-                                      _ac.value = 0;
-                                    }
                                   } else {
                                     _ac.value = 1;
                                   }
@@ -387,7 +381,12 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                                         _ac.value = 0;
                                       }
                                     } else {
-                                      _ac.value = 1;
+                                      if (controller.changed.value) {
+                                        controller.done();
+                                        controller.clear();
+                                      } else {
+                                        _ac.value = 1;
+                                      }
                                     }
                                   },
                                 ),
