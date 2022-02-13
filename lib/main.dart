@@ -175,11 +175,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
                                       budgetController.list.value = type;
                                       budgetController.key.value = key;
-                                      budgetController
-                                          .computed.value = budgetController
-                                              .budget[index].type
-                                          ? "+${budgetController.budget[index].computed}"
-                                          : "-${budgetController.budget[index].computed}";
+                                      budgetController.computed.value =
+                                          budgetController.budget[index].type
+                                              ? budgetController
+                                                  .budget[index].computed
+                                              : budgetController
+                                                  .budget[index].computed;
 
                                       budgetController.category.value =
                                           budgetController.budget[index].type

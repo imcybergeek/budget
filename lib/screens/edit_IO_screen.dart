@@ -86,7 +86,9 @@ class EditIOScreen extends StatelessWidget {
                         size: 18,
                       ),
                       trailing: CustomText(
-                        text: budgetController.computed.value,
+                        text: budgetController.category.value == "Expenses"
+                            ? "-${budgetController.computed.value}"
+                            : "+${budgetController.computed.value}",
                         size: 16,
                         weight: FontWeight.bold,
                         color: budgetController.category.value == "Expenses"
