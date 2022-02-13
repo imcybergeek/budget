@@ -1,4 +1,5 @@
 import 'package:budget/custom/budget_controller.dart';
+import 'package:budget/screens/io.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -105,19 +106,33 @@ class NewIOController extends GetxController {
     computed.value = eval;
   }
 
-  done() async {
+  done() {
     final BudgetController budgetController = Get.find();
     if (changed.value) {
       compute();
-      await budgetController.addTransaction(
+      budgetController.addTransaction(
         id.value == "" ? "${DateTime.now().millisecondsSinceEpoch}" : id.value,
         type.value,
         key.value,
         date.value,
         time.value,
-        text.value,
+        text.value == ""
+            ? remark.value == "Write a note"
+                ? ""
+                : remark.value
+            : text.value,
         computed.value,
       );
+      budgetController.list.value = type.value ? expense : income;
+      budgetController.key.value = key.value;
+      budgetController.computed.value = computed.value;
+      budgetController.category.value = type.value ? "Expenses" : "Income";
+      budgetController.dateTime.value = "${date.value}, ${time.value}";
+      budgetController.remark.value = text.value == ""
+          ? remark.value == "Write a note"
+              ? ""
+              : remark.value
+          : text.value;
     }
   }
 

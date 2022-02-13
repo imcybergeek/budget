@@ -369,9 +369,12 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                                   }
                                 },
                                 child: IconButton(
-                                  icon: Icon(controller.changed.value
-                                      ? Icons.check
-                                      : Icons.calculate_outlined),
+                                  icon: Icon(
+                                    controller.changed.value
+                                        ? Icons.check
+                                        : Icons.calculate_outlined,
+                                    size: 30,
+                                  ),
                                   onPressed: () async {
                                     if (_ac.value == 1) {
                                       if (controller.changed.value) {
