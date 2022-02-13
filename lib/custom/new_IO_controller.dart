@@ -46,6 +46,9 @@ class NewIOController extends GetxController {
   }
 
   expression(String expr) {
+    if (number.value == "0=" && computed.value == "0") {
+      return null;
+    }
     checkZero = true;
     if (no == "" || no.length == 14) {
       return null;
@@ -61,6 +64,9 @@ class NewIOController extends GetxController {
   }
 
   removeLast() {
+    if (number.value == "0=" && computed.value == "0") {
+      return null;
+    }
     if (no != "" && no.isNotEmpty) {
       number.value = no = no.substring(0, no.length - 1);
       if (no.isNotEmpty) {
@@ -73,7 +79,7 @@ class NewIOController extends GetxController {
         }
       } else {
         checkZero = true;
-        number.value = no = "=0";
+        number.value = no = "0=";
         computed.value = "0";
         changed.value = false;
         return null;
