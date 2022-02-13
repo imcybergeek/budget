@@ -123,10 +123,10 @@ class NewIOController extends GetxController {
             : text.value,
         computed.value,
       );
+      budgetController.type.value = type.value;
       budgetController.list.value = type.value ? expense : income;
       budgetController.key.value = key.value;
       budgetController.computed.value = computed.value;
-      budgetController.category.value = type.value ? "Expenses" : "Income";
       budgetController.dateTime.value = "${date.value}, ${time.value}";
       budgetController.remark.value = text.value == ""
           ? remark.value == "Write a note"
