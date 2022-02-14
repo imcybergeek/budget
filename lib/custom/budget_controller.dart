@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class BudgetController extends GetxController {
-  var isLoading = false;
+  var isLoading = true;
   var budget = <BudgetModel>[];
   RxList list = [].obs;
   RxInt key = (1).obs;

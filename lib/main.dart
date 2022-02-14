@@ -49,49 +49,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  void _create() async {
-    try {
-      await firestore.collection("users").doc("testUser").set({
-        'firstName': 'test',
-        'lastName': 'user',
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  void _read() async {
-    DocumentSnapshot documentSnapshot;
-    try {
-      documentSnapshot =
-          await firestore.collection('users').doc('testUser').get();
-      print(documentSnapshot.data());
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  void _update() async {
-    try {
-      firestore
-          .collection('users')
-          .doc('testUser')
-          .update({'firstName': 'testUpdated'});
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  void _delete() async {
-    try {
-      firestore.collection('users').doc('testUser').delete();
-    } catch (e) {
-      print(e);
-    }
-  }
-
   int offset = 250;
   double opacity = 0;
   final _controller = ScrollController();
@@ -143,11 +100,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         MonthlyInfo(),
                         BudgetInfo(),
-                        DailyIO(
-                          "Feb 12, 2022",
-                          "-160",
-                          "+10,000",
-                        ),
+                        // DailyIO(
+                        //   "Feb 12, 2022",
+                        //   "-160",
+                        //   "+10,000",
+                        // ),
                         budgetController.isLoading
                             ? SizedBox(
                                 child: CircularProgressIndicator(),
