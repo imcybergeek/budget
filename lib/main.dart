@@ -11,6 +11,10 @@ import 'route_generator.dart';
 import 'screens/sub_screens/app_drawer.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+double monthlyExpense = 0.0;
+double monthlyIncome = 0.0;
+double monthlyTotal = 0.0;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -99,60 +103,105 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         MonthlyInfo(),
                         BudgetInfo(),
-                        DailyIO(
-                          "Feb 14, 2022",
-                          "-160",
-                          "+10,000",
-                        ),
-                        budgetController.isLoading
-                            ? SizedBox(
+                        Visibility(
+                          visible: budgetController.isLoading,
+                          child: SizedBox(
+                            child: Center(
+                              child: Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(50)),
                                 child: CircularProgressIndicator(),
-                              )
-                            : ListView.builder(
-                                shrinkWrap: true,
-                                physics: ClampingScrollPhysics(),
-                                itemCount: budgetController.budget.length,
-                                itemBuilder: (context, index) {
-                                  int key = budgetController.budget[index].key;
-                                  List type =
-                                      budgetController.budget[index].type
-                                          ? expense
-                                          : income;
-                                  return IO(
-                                    () {
-                                      budgetController.id.value =
-                                          budgetController.budget[index].id;
-                                      budgetController.type.value =
-                                          budgetController.budget[index].type;
-                                      budgetController.date.value =
-                                          budgetController.budget[index].date;
-                                      budgetController.time.value =
-                                          budgetController.budget[index].time;
-
-                                      budgetController.list.value = type;
-                                      budgetController.key.value = key;
-                                      budgetController.computed.value =
-                                          budgetController
-                                              .budget[index].computed;
-
-                                      budgetController.category.value =
-                                          budgetController.budget[index].type
-                                              ? "Expenses"
-                                              : "Income";
-                                      budgetController.dateTime.value =
-                                          "${budgetController.budget[index].date}, ${budgetController.budget[index].time}";
-                                      budgetController.remark.value =
-                                          budgetController.budget[index].text;
-                                    },
-                                    type[key - 1].icon,
-                                    type[key - 1].color,
-                                    type[key - 1].text,
-                                    budgetController.budget[index].text,
-                                    budgetController.budget[index].computed,
-                                    type: budgetController.budget[index].type,
-                                  );
-                                },
                               ),
+                            ),
+                          ),
+                        ),
+                        Visibility(
+                          visible: !budgetController.isLoading,
+                          child: DailyIO(
+                            "Feb 14, 2022",
+                            "-160",
+                            "+10,000",
+                          ),
+                        ),
+                        Visibility(
+                          visible: !budgetController.isLoading,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: ClampingScrollPhysics(),
+                            itemCount: budgetController.budget.length,
+                            itemBuilder: (context, index) {
+                              int key = budgetController.budget[index].key;
+                              List type = budgetController.budget[index].type
+                                  ? expense
+                                  : income;
+                              budgetController.budget[index].type
+                                  ? monthlyExpense = monthlyExpense +
+                                      double.parse(budgetController
+                                          .budget[index].computed)
+                                  : monthlyIncome = monthlyIncome +
+                                      double.parse(budgetController
+                                          .budget[index].computed);
+
+                              if (index == budgetController.budget.length - 1) {
+                                budgetController.monthlyExpense.value =
+                                    monthlyExpense;
+                                budgetController.monthlyIncome.value =
+                                    monthlyIncome;
+                                budgetController.monthlyTotal.value =
+                                    monthlyIncome - monthlyExpense;
+
+                                budgetController.remainingBudget.value =
+                                    budgetController.monthlyExpense.value >
+                                            budgetController.monthlyBudget.value
+                                        ? 0.0
+                                        : budgetController.monthlyBudget.value -
+                                            budgetController
+                                                .monthlyExpense.value;
+
+                                budgetController.budgetPercentage.value = 1 -
+                                    budgetController.remainingBudget.value /
+                                        budgetController.monthlyBudget.value;
+                                monthlyIncome = 0.0;
+                                monthlyExpense = 0.0;
+                              }
+
+                              return IO(
+                                () {
+                                  budgetController.id.value =
+                                      budgetController.budget[index].id;
+                                  budgetController.type.value =
+                                      budgetController.budget[index].type;
+                                  budgetController.date.value =
+                                      budgetController.budget[index].date;
+                                  budgetController.time.value =
+                                      budgetController.budget[index].time;
+
+                                  budgetController.list.value = type;
+                                  budgetController.key.value = key;
+                                  budgetController.computed.value =
+                                      budgetController.budget[index].computed;
+
+                                  budgetController.category.value =
+                                      budgetController.budget[index].type
+                                          ? "Expenses"
+                                          : "Income";
+                                  budgetController.dateTime.value =
+                                      "${budgetController.budget[index].date}, ${budgetController.budget[index].time}";
+                                  budgetController.remark.value =
+                                      budgetController.budget[index].text;
+                                },
+                                type[key - 1].icon,
+                                type[key - 1].color,
+                                type[key - 1].text,
+                                budgetController.budget[index].text,
+                                budgetController.budget[index].computed,
+                                type: budgetController.budget[index].type,
+                              );
+                            },
+                          ),
+                        ),
                         SizedBox(height: 15),
                       ],
                     ),
@@ -232,7 +281,8 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class MonthlyInfo extends StatelessWidget {
-  const MonthlyInfo({
+  BudgetController budgetController = Get.find();
+  MonthlyInfo({
     Key? key,
   }) : super(key: key);
 
@@ -255,7 +305,7 @@ class MonthlyInfo extends StatelessWidget {
                 width: 5,
               ),
               CustomText(
-                text: "2022-01",
+                text: "2022-02",
                 size: 12,
                 color: Colors.white,
               ),
@@ -275,7 +325,10 @@ class MonthlyInfo extends StatelessWidget {
           Row(
             children: [
               CustomText(
-                text: "+19,330",
+                text: budgetController.monthlyTotal.value
+                    .toString()
+                    .replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                        (Match m) => '${m[1]},'),
                 color: Colors.white,
                 size: 35,
                 weight: FontWeight.bold,
@@ -294,7 +347,12 @@ class MonthlyInfo extends StatelessWidget {
                 size: 12,
               ),
               CustomText(
-                text: "-670",
+                text: "-" +
+                    budgetController.monthlyExpense.value
+                        .toString()
+                        .replaceAllMapped(
+                            RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                            (Match m) => '${m[1]},'),
                 color: Colors.white,
                 size: 16,
               ),
@@ -309,7 +367,12 @@ class MonthlyInfo extends StatelessWidget {
                 size: 12,
               ),
               CustomText(
-                text: "+20,000",
+                text: "+" +
+                    budgetController.monthlyIncome.value
+                        .toString()
+                        .replaceAllMapped(
+                            RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                            (Match m) => '${m[1]},'),
                 color: Colors.white,
                 size: 16,
               ),
@@ -322,7 +385,8 @@ class MonthlyInfo extends StatelessWidget {
 }
 
 class BudgetInfo extends StatelessWidget {
-  const BudgetInfo({
+  final BudgetController budgetController = Get.find();
+  BudgetInfo({
     Key? key,
   }) : super(key: key);
 
@@ -363,7 +427,11 @@ class BudgetInfo extends StatelessWidget {
                       ),
                     ),
                     CustomText(
-                      text: "5,000",
+                      text: budgetController.monthlyBudget.value
+                          .toString()
+                          .replaceAllMapped(
+                              RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                              (Match m) => '${m[1]},'),
                       size: 18,
                       weight: FontWeight.bold,
                     ),
@@ -375,7 +443,7 @@ class BudgetInfo extends StatelessWidget {
                   LinearPercentIndicator(
                     width: MediaQuery.of(context).size.width,
                     lineHeight: 8,
-                    percent: 0.25,
+                    percent: budgetController.budgetPercentage.value,
                     backgroundColor: Colors.grey[100],
                     progressColor: Colors.blue,
                     barRadius: Radius.circular(10),
@@ -396,7 +464,11 @@ class BudgetInfo extends StatelessWidget {
                       ),
                     ),
                     CustomText(
-                      text: "4,330",
+                      text: budgetController.remainingBudget.value
+                          .toString()
+                          .replaceAllMapped(
+                              RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                              (Match m) => '${m[1]},'),
                       size: 18,
                       weight: FontWeight.bold,
                     ),
@@ -412,7 +484,8 @@ class BudgetInfo extends StatelessWidget {
 }
 
 class YearlyInfo extends StatelessWidget {
-  const YearlyInfo({
+  final BudgetController budgetController = Get.find();
+  YearlyInfo({
     Key? key,
     required this.opacity,
   }) : super(key: key);
@@ -439,7 +512,7 @@ class YearlyInfo extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         CustomText(
-                            color: Colors.white, text: "2022-01", size: 15),
+                            color: Colors.white, text: "2022-02", size: 15),
                       ],
                     ),
                     Spacer(),
@@ -456,7 +529,13 @@ class YearlyInfo extends StatelessWidget {
                             ),
                             CustomText(
                               color: Colors.white,
-                              text: "-7,376",
+                              text: "-" +
+                                  budgetController.monthlyExpense.value
+                                      .toString()
+                                      .replaceAllMapped(
+                                          RegExp(
+                                              r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                                          (Match m) => '${m[1]},'),
                               size: 16,
                               weight: FontWeight.bold,
                             ),
@@ -472,7 +551,13 @@ class YearlyInfo extends StatelessWidget {
                             ),
                             CustomText(
                               color: Colors.white,
-                              text: "+20,000",
+                              text: "+" +
+                                  budgetController.monthlyIncome.value
+                                      .toString()
+                                      .replaceAllMapped(
+                                          RegExp(
+                                              r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                                          (Match m) => '${m[1]},'),
                               size: 16,
                               weight: FontWeight.bold,
                             ),
@@ -505,6 +590,7 @@ class DailyIO extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final BudgetController budgetController = Get.find();
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
       child: Container(
@@ -515,12 +601,24 @@ class DailyIO extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustomText(
-                text: "Feb 15, 2022",
+                text: "Feb 18, 2022",
                 size: 10,
               ),
               Spacer(),
               CustomText(
-                text: "Expense:-27,206  Income:+10,000",
+                text: "Expense:-" +
+                    budgetController.monthlyExpense.value
+                        .toString()
+                        .replaceAllMapped(
+                            RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                            (Match m) => '${m[1]},') +
+                    "  " +
+                    "Income:+" +
+                    budgetController.monthlyIncome.value
+                        .toString()
+                        .replaceAllMapped(
+                            RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                            (Match m) => '${m[1]},'),
                 size: 10,
               ),
             ],
