@@ -612,14 +612,18 @@ class DailyIO extends StatelessWidget {
                         .replaceAllMapped(
                             RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                             (Match m) => '${m[1]},') +
-                    "  " +
-                    "Income:+" +
+                    "  ",
+                size: 10,
+              ),
+              CustomText(
+                text: "Income:+" +
                     budgetController.monthlyIncome.value
                         .toString()
                         .replaceAllMapped(
                             RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                             (Match m) => '${m[1]},'),
                 size: 10,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ],
           ),
