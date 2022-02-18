@@ -1,7 +1,6 @@
 import 'package:budget/custom/new_IO_controller.dart';
 import 'package:budget/screens/io.dart';
 import 'package:budget/screens/sub_screens/popUp_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart';
@@ -100,11 +99,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         MonthlyInfo(),
                         BudgetInfo(),
-                        // DailyIO(
-                        //   "Feb 12, 2022",
-                        //   "-160",
-                        //   "+10,000",
-                        // ),
+                        DailyIO(
+                          "Feb 14, 2022",
+                          "-160",
+                          "+10,000",
+                        ),
                         budgetController.isLoading
                             ? SizedBox(
                                 child: CircularProgressIndicator(),
@@ -133,11 +132,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                       budgetController.list.value = type;
                                       budgetController.key.value = key;
                                       budgetController.computed.value =
-                                          budgetController.budget[index].type
-                                              ? budgetController
-                                                  .budget[index].computed
-                                              : budgetController
-                                                  .budget[index].computed;
+                                          budgetController
+                                              .budget[index].computed;
 
                                       budgetController.category.value =
                                           budgetController.budget[index].type
@@ -519,7 +515,7 @@ class DailyIO extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustomText(
-                text: "Jan 31, 2022",
+                text: "Feb 15, 2022",
                 size: 10,
               ),
               Spacer(),
