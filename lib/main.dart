@@ -16,8 +16,7 @@ double monthlyIncome = 0.0;
 double monthlyTotal = 0.0;
 double dailyExpense = 0.0;
 double dailyIncome = 0.0;
-var uniqueDate = <String>{};
-var dateList = [];
+var uniqueDates = <String>{};
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -89,11 +88,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
         var i = 0;
         while (i < budgetController.budget.length) {
-          uniqueDate.add(budgetController.budget[i].date);
+          uniqueDates.add(budgetController.budget[i].date);
           i++;
         }
-        dateList = uniqueDate.toList();
-        dateList = dateList.reversed.toList();
 
         return Container(
           color: Theme.of(context).colorScheme.primary,
@@ -135,13 +132,13 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: ListView.builder(
                             shrinkWrap: true,
                             physics: ClampingScrollPhysics(),
-                            itemCount: dateList.length,
+                            itemCount: uniqueDates.length,
                             itemBuilder: (context, index) {
                               dailyExpense = 0;
                               dailyIncome = 0;
                               var i = 0;
                               while (i < budgetController.budget.length) {
-                                if (dateList.elementAt(index) ==
+                                if (uniqueDates.elementAt(index) ==
                                     budgetController.budget[i].date) {
                                   budgetController.budget[i].type
                                       ? dailyExpense = dailyExpense +
@@ -157,10 +154,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                 return SizedBox();
                               }
                               return DailyIO(
-                                dateList.elementAt(index),
+                                uniqueDates.elementAt(index),
                                 budgetController.monthlyExpense.value,
                                 budgetController.monthlyExpense.value,
-                                dateList.elementAt(index),
                               );
                             },
                           ),
@@ -540,16 +536,14 @@ class YearlyInfo extends StatelessWidget {
 }
 
 class DailyIO extends StatelessWidget {
-  final String date;
+  final String uniqueDates;
   final double expenses;
   final double incomes;
-  final String dateList;
 
   DailyIO(
-    this.date,
+    this.uniqueDates,
     this.expenses,
-    this.incomes,
-    this.dateList, {
+    this.incomes, {
     Key? key,
   }) : super(key: key);
 
@@ -568,7 +562,7 @@ class DailyIO extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomText(
-                    text: date,
+                    text: uniqueDates,
                     size: 10,
                   ),
                   Spacer(),
@@ -598,7 +592,7 @@ class DailyIO extends StatelessWidget {
           physics: ClampingScrollPhysics(),
           itemCount: budgetController.budget.length,
           itemBuilder: (context, index) {
-            if (dateList != budgetController.budget[index].date) {
+            if (uniqueDates != budgetController.budget[index].date) {
               return SizedBox();
             }
             int key = budgetController.budget[index].key;
