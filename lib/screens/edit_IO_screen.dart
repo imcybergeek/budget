@@ -107,10 +107,27 @@ class EditIOScreen extends StatelessWidget {
                       trailing: budgetController.dateTime.value,
                     ),
                     Div(),
-                    optionTile(
-                      leading: Icons.note_alt_outlined,
-                      text: "Remark",
-                      trailing: budgetController.remark.value,
+                    Stack(
+                      children: [
+                        ListTile(
+                          horizontalTitleGap: 0,
+                          dense: true,
+                          leading: SizedBox(width: 125),
+                          title: Text(
+                            budgetController.remark.value,
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
+                        ListTile(
+                          horizontalTitleGap: 0,
+                          dense: true,
+                          leading: Icon(Icons.note_alt_outlined),
+                          title: CustomText(
+                            text: "Remark",
+                            size: 16,
+                          ),
+                        )
+                      ],
                     ),
                   ],
                 ),
