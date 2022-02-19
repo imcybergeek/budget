@@ -22,6 +22,8 @@ class BudgetController extends GetxController {
   RxDouble monthlyBudget = (50000.0).obs;
   RxDouble remainingBudget = (0.0).obs;
   RxDouble budgetPercentage = (0.0).obs;
+  RxDouble dailyExpense = (0.0).obs;
+  RxDouble dailyIncome = (0.0).obs;
 
   Future<void> addTransaction(String id, bool type, int key, String date,
       String time, String text, String computed) async {

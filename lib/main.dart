@@ -14,6 +14,10 @@ import 'package:firebase_core/firebase_core.dart';
 double monthlyExpense = 0.0;
 double monthlyIncome = 0.0;
 double monthlyTotal = 0.0;
+double dailyExpense = 0.0;
+double dailyIncome = 0.0;
+var uniqueDate = <String>{};
+var dateList = [];
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -82,6 +86,15 @@ class _MyHomePageState extends State<MyHomePage> {
       initState: (_) {},
       builder: (budgetController) {
         budgetController.getData();
+
+        var i = 0;
+        while (i < budgetController.budget.length) {
+          uniqueDate.add(budgetController.budget[i].date);
+          i++;
+        }
+        dateList = uniqueDate.toList();
+        dateList = dateList.reversed.toList();
+
         return Container(
           color: Theme.of(context).colorScheme.primary,
           child: SafeArea(
@@ -119,85 +132,32 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         Visibility(
                           visible: !budgetController.isLoading,
-                          child: DailyIO(
-                            "Feb 14, 2022",
-                            "-160",
-                            "+10,000",
-                          ),
-                        ),
-                        Visibility(
-                          visible: !budgetController.isLoading,
                           child: ListView.builder(
                             shrinkWrap: true,
                             physics: ClampingScrollPhysics(),
-                            itemCount: budgetController.budget.length,
+                            itemCount: dateList.length,
                             itemBuilder: (context, index) {
-                              int key = budgetController.budget[index].key;
-                              List type = budgetController.budget[index].type
-                                  ? expense
-                                  : income;
-                              budgetController.budget[index].type
-                                  ? monthlyExpense = monthlyExpense +
-                                      double.parse(budgetController
-                                          .budget[index].computed)
-                                  : monthlyIncome = monthlyIncome +
-                                      double.parse(budgetController
-                                          .budget[index].computed);
-
-                              if (index == budgetController.budget.length - 1) {
-                                budgetController.monthlyExpense.value =
-                                    monthlyExpense;
-                                budgetController.monthlyIncome.value =
-                                    monthlyIncome;
-                                budgetController.monthlyTotal.value =
-                                    monthlyIncome - monthlyExpense;
-
-                                budgetController.remainingBudget.value =
-                                    budgetController.monthlyExpense.value >
-                                            budgetController.monthlyBudget.value
-                                        ? 0.0
-                                        : budgetController.monthlyBudget.value -
-                                            budgetController
-                                                .monthlyExpense.value;
-
-                                budgetController.budgetPercentage.value = 1 -
-                                    budgetController.remainingBudget.value /
-                                        budgetController.monthlyBudget.value;
-                                monthlyIncome = 0.0;
-                                monthlyExpense = 0.0;
+                              dailyExpense = 0;
+                              dailyIncome = 0;
+                              var i = 0;
+                              while (i < budgetController.budget.length) {
+                                if (dateList.elementAt(index) ==
+                                    budgetController.budget[i].date) {
+                                  budgetController.budget[i].type
+                                      ? dailyExpense = dailyExpense +
+                                          double.parse(budgetController
+                                              .budget[i].computed)
+                                      : dailyIncome = dailyIncome +
+                                          double.parse(budgetController
+                                              .budget[i].computed);
+                                }
+                                i++;
                               }
-
-                              return IO(
-                                () {
-                                  budgetController.id.value =
-                                      budgetController.budget[index].id;
-                                  budgetController.type.value =
-                                      budgetController.budget[index].type;
-                                  budgetController.date.value =
-                                      budgetController.budget[index].date;
-                                  budgetController.time.value =
-                                      budgetController.budget[index].time;
-
-                                  budgetController.list.value = type;
-                                  budgetController.key.value = key;
-                                  budgetController.computed.value =
-                                      budgetController.budget[index].computed;
-
-                                  budgetController.category.value =
-                                      budgetController.budget[index].type
-                                          ? "Expenses"
-                                          : "Income";
-                                  budgetController.dateTime.value =
-                                      "${budgetController.budget[index].date}, ${budgetController.budget[index].time}";
-                                  budgetController.remark.value =
-                                      budgetController.budget[index].text;
-                                },
-                                type[key - 1].icon,
-                                type[key - 1].color,
-                                type[key - 1].text,
-                                budgetController.budget[index].text,
-                                budgetController.budget[index].computed,
-                                type: budgetController.budget[index].type,
+                              return DailyIO(
+                                dateList.elementAt(index),
+                                budgetController.monthlyExpense.value,
+                                budgetController.monthlyExpense.value,
+                                dateList.elementAt(index),
                               );
                             },
                           ),
@@ -578,57 +538,126 @@ class YearlyInfo extends StatelessWidget {
 
 class DailyIO extends StatelessWidget {
   final String date;
-  final String expense;
-  final String type;
+  final double expenses;
+  final double incomes;
+  final String dateList;
 
   DailyIO(
     this.date,
-    this.expense,
-    this.type, {
+    this.expenses,
+    this.incomes,
+    this.dateList, {
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final BudgetController budgetController = Get.find();
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-      child: Container(
-        color: Colors.grey[100],
-        child: Padding(
-          padding: const EdgeInsets.all(5),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CustomText(
-                text: "Feb 18, 2022",
-                size: 10,
-              ),
-              Spacer(),
-              CustomText(
-                text: "Expense:-" +
-                    budgetController.monthlyExpense.value
-                        .toString()
-                        .replaceAllMapped(
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+          child: Container(
+            color: Colors.grey[100],
+            child: Padding(
+              padding: const EdgeInsets.all(5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomText(
+                    text: date,
+                    size: 10,
+                  ),
+                  Spacer(),
+                  CustomText(
+                    text: "Expense:-" +
+                        dailyExpense.toString().replaceAllMapped(
                             RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                             (Match m) => '${m[1]},') +
-                    "  ",
-                size: 10,
-              ),
-              CustomText(
-                text: "Income:+" +
-                    budgetController.monthlyIncome.value
-                        .toString()
-                        .replaceAllMapped(
+                        "  ",
+                    size: 10,
+                  ),
+                  CustomText(
+                    text: "Income:+" +
+                        dailyIncome.toString().replaceAllMapped(
                             RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                             (Match m) => '${m[1]},'),
-                size: 10,
-                color: Theme.of(context).colorScheme.primary,
+                    size: 10,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
-      ),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: ClampingScrollPhysics(),
+          itemCount: budgetController.budget.length,
+          itemBuilder: (context, index) {
+            if (dateList != budgetController.budget[index].date) {
+              return SizedBox();
+            }
+            int key = budgetController.budget[index].key;
+            List type = budgetController.budget[index].type ? expense : income;
+            budgetController.budget[index].type
+                ? monthlyExpense = monthlyExpense +
+                    double.parse(budgetController.budget[index].computed)
+                : monthlyIncome = monthlyIncome +
+                    double.parse(budgetController.budget[index].computed);
+
+            if (index == budgetController.budget.length - 1) {
+              budgetController.monthlyExpense.value = monthlyExpense;
+              budgetController.monthlyIncome.value = monthlyIncome;
+              budgetController.monthlyTotal.value =
+                  monthlyIncome - monthlyExpense;
+
+              budgetController.remainingBudget.value =
+                  budgetController.monthlyExpense.value >
+                          budgetController.monthlyBudget.value
+                      ? 0.0
+                      : budgetController.monthlyBudget.value -
+                          budgetController.monthlyExpense.value;
+
+              budgetController.budgetPercentage.value = 1 -
+                  budgetController.remainingBudget.value /
+                      budgetController.monthlyBudget.value;
+              monthlyIncome = 0.0;
+              monthlyExpense = 0.0;
+            }
+
+            return IO(
+              () {
+                budgetController.id.value = budgetController.budget[index].id;
+                budgetController.type.value =
+                    budgetController.budget[index].type;
+                budgetController.date.value =
+                    budgetController.budget[index].date;
+                budgetController.time.value =
+                    budgetController.budget[index].time;
+
+                budgetController.list.value = type;
+                budgetController.key.value = key;
+                budgetController.computed.value =
+                    budgetController.budget[index].computed;
+
+                budgetController.category.value =
+                    budgetController.budget[index].type ? "Expenses" : "Income";
+                budgetController.dateTime.value =
+                    "${budgetController.budget[index].date}, ${budgetController.budget[index].time}";
+                budgetController.remark.value =
+                    budgetController.budget[index].text;
+              },
+              type[key - 1].icon,
+              type[key - 1].color,
+              type[key - 1].text,
+              budgetController.budget[index].text,
+              budgetController.budget[index].computed,
+              type: budgetController.budget[index].type,
+            );
+          },
+        ),
+      ],
     );
   }
 }
