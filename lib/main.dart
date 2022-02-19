@@ -153,6 +153,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                 }
                                 i++;
                               }
+                              if (dailyExpense == 0.0 && dailyIncome == 0.0) {
+                                return SizedBox();
+                              }
                               return DailyIO(
                                 dateList.elementAt(index),
                                 budgetController.monthlyExpense.value,
