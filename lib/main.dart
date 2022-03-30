@@ -17,6 +17,7 @@ double monthlyTotal = 0.0;
 double dailyExpense = 0.0;
 double dailyIncome = 0.0;
 var uniqueDates = <String>{};
+var dateList = [];
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +27,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     SystemUiOverlayStyle myOverlayStyle =
@@ -90,8 +90,9 @@ class _MyHomePageState extends State<MyHomePage> {
         while (i < budgetController.budget.length) {
           uniqueDates.add(budgetController.budget[i].date);
           i++;
+          dateList = uniqueDates.toList();
+          dateList = dateList.reversed.toList();
         }
-
         return Container(
           color: Theme.of(context).colorScheme.primary,
           child: SafeArea(
@@ -132,13 +133,13 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: ListView.builder(
                             shrinkWrap: true,
                             physics: ClampingScrollPhysics(),
-                            itemCount: uniqueDates.length,
+                            itemCount: dateList.length,
                             itemBuilder: (context, index) {
                               dailyExpense = 0;
                               dailyIncome = 0;
                               var i = 0;
                               while (i < budgetController.budget.length) {
-                                if (uniqueDates.elementAt(index) ==
+                                if (dateList.elementAt(index) ==
                                     budgetController.budget[i].date) {
                                   budgetController.budget[i].type
                                       ? dailyExpense = dailyExpense +
@@ -154,9 +155,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                 return SizedBox();
                               }
                               return DailyIO(
-                                uniqueDates.elementAt(index),
+                                dateList.elementAt(index),
                                 budgetController.monthlyExpense.value,
                                 budgetController.monthlyExpense.value,
+                                dateList.elementAt(index),
                               );
                             },
                           ),
@@ -536,14 +538,16 @@ class YearlyInfo extends StatelessWidget {
 }
 
 class DailyIO extends StatelessWidget {
-  final String uniqueDates;
+  final String date;
   final double expenses;
   final double incomes;
+  final String dateList;
 
   DailyIO(
-    this.uniqueDates,
+    this.date,
     this.expenses,
-    this.incomes, {
+    this.incomes,
+    this.dateList, {
     Key? key,
   }) : super(key: key);
 
@@ -562,7 +566,7 @@ class DailyIO extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomText(
-                    text: uniqueDates,
+                    text: date,
                     size: 10,
                   ),
                   Spacer(),
@@ -592,7 +596,7 @@ class DailyIO extends StatelessWidget {
           physics: ClampingScrollPhysics(),
           itemCount: budgetController.budget.length,
           itemBuilder: (context, index) {
-            if (uniqueDates != budgetController.budget[index].date) {
+            if (dateList != budgetController.budget[index].date) {
               return SizedBox();
             }
             int key = budgetController.budget[index].key;
@@ -649,7 +653,9 @@ class DailyIO extends StatelessWidget {
               type[key - 1].color,
               type[key - 1].text,
               budgetController.budget[index].text,
-              budgetController.budget[index].computed,
+              budgetController.budget[index].computed.replaceAllMapped(
+                  RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                  (Match m) => '${m[1]},'),
               type: budgetController.budget[index].type,
             );
           },

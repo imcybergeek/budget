@@ -66,7 +66,7 @@ class BudgetController extends GetxController {
           ),
         );
       }
-      budget = budget.reversed.toList();
+      budget = budget.toList();
       isLoading = false;
       update();
     } catch (e) {

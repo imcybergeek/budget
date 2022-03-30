@@ -12,7 +12,7 @@ class IO {
 }
 
 List<IO> expense = [
-  IO(key: 1, text: "XD", icon: FontAwesomeIcons.youtube, color: Colors.green),
+  IO(key: 1, text: "Custom", icon: FontAwesomeIcons.plus, color: Colors.green),
   IO(
       key: 2,
       text: "Food",
